@@ -5,6 +5,27 @@ var express             = require("express"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
     app                 = express();
+    
+let mysql = require('mysql');
+
+//Connection to database
+let connection = mysql.createConnection({
+    host: 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
+    port: '3306',
+    user: 'Segfaultcapstone',
+    password: 'S3gfault2019',
+    database: 'db-segfault-cap',
+    debug: true
+});
+
+//Test and print out whether or not it worked
+connection.connect(function(err){
+    if(err){
+        console.error("Database connection failed -- " + err.stack);
+        return;
+    }
+    console.log("Connected to datbase!!");
+});
 
 //This just makes it so that we don't have to type out '.ejs' after every webpage route
 //note: .ejs files stand for express js

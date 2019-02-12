@@ -1,18 +1,29 @@
 {
-  "name": "Seg-Fault Capstone Project",
-  "version": "0.0.0",
-  "description": "SegFault Capstone Project",
+  "name": "capstone-seg-fault",
+  "version": "1.0.0",
+  "description": "",
   "main": "server.js",
-  "repository": "",
-  "author": "Seg Fault <segfaultcapstone@gmail.com>",
   "dependencies": {
-    "async": "~2.6.1",
-    "express": "^4.16.4",
-    "ejs": "^2.6.1",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-http-to-https": "^1.1.4",
+    "ejs": "^2.6.1",
     "mysql": "^2.16.0",
-    "nodemailer": "^5.1.1",
-    "socket.io": "~2.2.0"
-  }
+    "nodemailer": "^5.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MeganRydson/Capstone-Seg-Fault-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MeganRydson/Capstone-Seg-Fault-/issues"
+  },
+  "homepage": "https://github.com/MeganRydson/Capstone-Seg-Fault-#readme"
 }
