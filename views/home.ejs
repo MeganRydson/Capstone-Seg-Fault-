@@ -7,5 +7,21 @@
     <body>
 
     <h1>HELLO WORLD HAHA</h1>
+    
+    <% for(var i = 0; i < devices.length; i++){ %>
+        <li>ID: <%= devices[i].dev_ID %> </li>
+        <li>Name: <%= devices[i].dev_Name %> </li>
+        <li>Serial Number: <%= devices[i].dev_SN %> </li>
+        <li>Description: <%= devices[i].dev_Description %> </li>
+        <li>Available: <%= devices[i].dev_Available %> </li>
+        <br>
+    <% } %>
+    
+    <form action="/add_dev" method="POST">
+        <input type="text" name="dev_Name" placeholder="Name">
+        <input type="text" name="dev_SN" placeholder="Serial Number">
+        <input type="text" name="dev_Description" placeholder="Descripition">
+        <button>Submit</button>
+    </form>
 
 <% include partials/footer %>
