@@ -20,16 +20,18 @@ app.use(parse.urlencoded({extended: true}));
 //HTTP is default route (we don't want this). This redirects all routes to HTTPS for security
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "yourusername",
-//   password: "yourpassword"
-// });
+var con = db.createConnection({
+    host     : 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
+    port     : '3306',
+    user     : 'Segfaultcapstone',
+    password : 'S3gfault2019',
+    database : 'db-segfault-cap'
+});
 
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 app.get("/", function(req, res){
     var devices = [
@@ -40,8 +42,19 @@ app.get("/", function(req, res){
     res.render("home", {devices: devices});
 });
 
-app.post("/add_dev", function(req, res){
-    console.log(req.body);
+app.post("/", function(req, res){
+    var sql = "INSERT INTO Devices (dev_Name, dev_SN, dev_Description, dev_Active) VALUES ?";
+    var devices = [
+        [req.body.dev_Name, req.body.dev_SN, req.body.dev_Description, 'true'],
+    ];
+    console.log(req.body.dev_Name);
+    console.log(req.body.dev_SN);
+    console.log(req.body.dev_Description);
+
+    con.query(sql, [devices], function(err, result){
+        if(err) throw err;
+        console.log("Number of records inserted: " + result.affectedRows);
+    });
 });
 
 //Server initiation
