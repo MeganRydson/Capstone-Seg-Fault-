@@ -18,7 +18,11 @@
             <div class="fields">
                 <div class="field">
                     <label>Name</label>
-                    <input type="text" name="dev_Name" placeholder="Name">
+                    <input type="text" name="loc_Name" placeholder="Name">
+                </div>
+                
+                <div class="field">
+                    <input id="bottom" class="ui secondary button" type="add" value="Add">
                 </div>
             </div>
         </div>
@@ -38,7 +42,6 @@
             <tr>
                 <td><%= locations[i].loc_ID %></td>
                 <td><%= locations[i].loc_Name %></td>
-                
             </tr>
             <% } %>
         </tbody>
