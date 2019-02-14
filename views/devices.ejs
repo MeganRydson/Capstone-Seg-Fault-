@@ -1,0 +1,64 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Devices</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <center><h1>Devices</h1></center>
+    
+    <br>
+    <br>
+    
+    <form action="/devices" method="POST">
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="dev_Name" placeholder="Name">
+                </div>
+                <div class="field">
+                    <label>Serial #</label>
+                    <input type="text" name="dev_SN" placeholder="Serial Number">
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" name="dev_Description" placeholder="Descripition">
+                </div>
+                <div class="field">
+                    <input id="bottom" class="ui secondary button" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <br>
+    
+    <table class="ui selectable inverted table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Serial #</th>
+                <th>Description</th>
+                <th>Available?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i < devices.length; i++){ %>
+            <tr>
+                <td><%= devices[i].dev_ID %></td>
+                <td><%= devices[i].dev_Name %></td>
+                <td><%= devices[i].dev_SN %></td>
+                <td><%= devices[i].dev_Description %></td>
+                <td><%= devices[i].dev_Available %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    
+
+<% include partials/footer %>
