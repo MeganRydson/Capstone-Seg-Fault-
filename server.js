@@ -29,32 +29,38 @@ var con = db.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+    if (err) throw err;
+    console.log("Connected to MySQL database.");
 });
 
 app.get("/", function(req, res){
-    var devices = [
-        {dev_ID: 001, dev_Name: "Dev1", dev_SN: "12345", dev_Description: "The first device", dev_Available: true},
-        {dev_ID: 002, dev_Name: "Dev2", dev_SN: "23456", dev_Description: "I'm second!", dev_Available: false},
-        {dev_ID: 003, dev_Name: "Dev3", dev_SN: "34537", dev_Description: "Last but not least", dev_Available: true}
-    ]
-    res.render("home", {devices: devices});
+    
+    res.render("home");
+
 });
 
-app.post("/", function(req, res){
+app.get("/devices", function(req, res){
+    
+    con.query("SELECT * FROM Devices", function (err, result, fields) {
+        if (err) throw err;
+        res.render("devices", {devices: result});
+    });
+
+});
+
+app.post("/devices", function(req, res){
+    
     var sql = "INSERT INTO Devices (dev_Name, dev_SN, dev_Description, dev_Active) VALUES ?";
     var devices = [
-        [req.body.dev_Name, req.body.dev_SN, req.body.dev_Description, 'true'],
+        [req.body.dev_Name, req.body.dev_SN, req.body.dev_Description, 'true']
     ];
-    console.log(req.body.dev_Name);
-    console.log(req.body.dev_SN);
-    console.log(req.body.dev_Description);
 
     con.query(sql, [devices], function(err, result){
         if(err) throw err;
         console.log("Number of records inserted: " + result.affectedRows);
     });
+    res.redirect("devices");
+    
 });
 
 //Server initiation
