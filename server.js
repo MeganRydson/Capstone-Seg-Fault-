@@ -34,33 +34,26 @@ con.connect(function(err) {
 });
 
 app.get("/", function(req, res){
-    
     res.render("home");
-
 });
 
 app.get("/devices", function(req, res){
-    
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
         res.render("devices", {devices: result});
     });
-
 });
 
 app.post("/devices", function(req, res){
-    
     var sql = "INSERT INTO Devices (dev_Name, dev_SN, dev_Description, dev_Active) VALUES ?";
     var devices = [
         [req.body.dev_Name, req.body.dev_SN, req.body.dev_Description, 'true']
     ];
-
     con.query(sql, [devices], function(err, result){
         if(err) throw err;
         console.log("Number of records inserted: " + result.affectedRows);
     });
     res.redirect("devices");
-    
 });
 
 //Server initiation
