@@ -1,13 +1,19 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "name": "capstone-seg-fault",
+  "version": "1.0.0",
+  "description": "",
   "main": "server.js",
-  "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
+
     "async": "~0.2.8",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^3.21.2",
+    "express-http-to-https": "^1.1.4",
+    "mysql": "^2.16.0",
+    "nodemailer": "^5.1.1",
+    "semantic-ui": "^2.4.2",
     "socket.io": "~0.9.14"
   }
+
 }

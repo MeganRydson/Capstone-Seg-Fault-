@@ -1,0 +1,31 @@
+
+/*********/
+/*GENERAL*/
+/*********/
+
+body {
+    background-color: rgb(150,150,170);
+}
+
+h1 {
+    text-align: center;
+}
+
+i {
+    margin: 0 8px;
+}
+
+table {
+    width: 70% !important;
+    margin: 20px auto !important;
+}
+
+form {
+    width: 70% !important;
+    margin: 20px auto !important;
+}
+
+#bottom {
+    position: absolute;
+    bottom: 0;
+}
