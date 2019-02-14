@@ -1,12 +1,10 @@
 //Node.js app requirements. These lines only work if you've already installed them.
 var express             = require("express"),
-    parse               = require("body-parser"),
+    parse               =  require("body-parser"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
     app                 = express();
-    
-let mysql = require('mysql');
 
 //This just makes it so that we don't have to type out '.ejs' after every webpage route
 //note: .ejs files stand for embedded javascript
@@ -36,7 +34,12 @@ con.connect(function(err) {
 });
 
 app.get("/", function(req, res){
-    res.render("home");
+    var devices = [
+        {dev_ID: 001, dev_Name: "Dev1", dev_SN: "12345", dev_Description: "The first device", dev_Available: true},
+        {dev_ID: 002, dev_Name: "Dev2", dev_SN: "23456", dev_Description: "I'm second!", dev_Available: false},
+        {dev_ID: 003, dev_Name: "Dev3", dev_SN: "34537", dev_Description: "Last but not least", dev_Available: true}
+    ]
+    res.render("home", {devices: devices});
 });
 
 
