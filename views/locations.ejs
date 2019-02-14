@@ -1,0 +1,48 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Locations</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <center><h1>Locations</h1></center>
+    
+    <br>
+    <br>
+    
+    <form action="/locations" method="POST">
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="dev_Name" placeholder="Name">
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <br>
+    
+    <table class="ui selectable inverted table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Locations</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i < locations.length; i++){ %>
+            <tr>
+                <td><%= locations[i].loc_ID %></td>
+                <td><%= locations[i].loc_Name %></td>
+                
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    
+
+<% include partials/footer %>

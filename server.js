@@ -8,25 +8,6 @@ var express             = require("express"),
     
 let mysql = require('mysql');
 
-//Connection to database
-let connection = mysql.createConnection({
-    host: 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
-    port: '3306',
-    user: 'Segfaultcapstone',
-    password: 'S3gfault2019',
-    database: 'db-segfault-cap',
-    debug: true
-});
-
-//Test and print out whether or not it worked
-connection.connect(function(err){
-    if(err){
-        console.error("Database connection failed -- " + err.stack);
-        return;
-    }
-    console.log("Connected to datbase!!");
-});
-
 //This just makes it so that we don't have to type out '.ejs' after every webpage route
 //note: .ejs files stand for embedded javascript
 app.set("view engine", "ejs");
@@ -58,6 +39,8 @@ app.get("/", function(req, res){
     res.render("home");
 });
 
+
+//DEVICES GET AND POST
 app.get("/devices", function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
@@ -76,6 +59,28 @@ app.post("/devices", function(req, res){
     });
     res.redirect("devices");
 });
+
+
+//LOCATIONS GET AND POST
+app.get("/locations", function(req, res){
+    con.query("SELECT * FROM Locations", function (err, result, fields) {
+        if (err) throw err;
+        res.render("locations", {locations: result});
+    });
+});
+
+app.post("/locations", function(req, res){
+    var sql = "INSERT INTO Locations (loc_Name) VALUES ?";
+    var locations = [
+        [req.body.loc_Name]
+    ];
+    con.query(sql, [locations], function(err, result){
+        if(err) throw err;
+        console.log("Number of records inserted: " + result.affectedRows);
+    });
+    res.redirect("locations");
+});
+
 
 //Server initiation
 app.listen(process.env.PORT, process.env.IP, function(){
