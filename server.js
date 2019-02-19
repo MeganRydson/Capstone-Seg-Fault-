@@ -11,7 +11,6 @@ var express             = require("express"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
     app                 = express();
 
-
 //This just makes it so that we don't have to type out '.ejs' after every webpage route
 //note: .ejs files stand for embedded javascript
 app.set("view engine", "ejs");
@@ -40,9 +39,16 @@ con.connect(function(err) {
 });
 
 app.get("/", function(req, res){
-    res.render("home");
+    var devices = [
+        {dev_ID: 001, dev_Name: "Dev1", dev_SN: "12345", dev_Description: "The first device", dev_Available: true},
+        {dev_ID: 002, dev_Name: "Dev2", dev_SN: "23456", dev_Description: "I'm second!", dev_Available: false},
+        {dev_ID: 003, dev_Name: "Dev3", dev_SN: "34537", dev_Description: "Last but not least", dev_Available: true}
+    ]
+    res.render("home", {devices: devices});
 });
 
+
+//DEVICES GET AND POST
 app.get("/devices", function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
@@ -69,6 +75,7 @@ app.post("/devices", function(req, res){
     res.redirect("devices");
 });
 
+//ORGANIZATIONS GET AND POST
 app.post("/organizations", function(req, res){
     var sql = "INSERT INTO Organizations (org_OrgName, org_BudgetCode) VALUES ?";
     var organizations = [
@@ -80,10 +87,78 @@ app.post("/organizations", function(req, res){
     });
     res.redirect("organizations");
 });
+//TO REMOVE ORGANIZATIONS FROM DB
+app.get("/removeOrganizations", function(req, res){
+    res.redirect("organizations");
+});
+
+app.post("/removeOrganizations", function(req, res){
+    console.log("something happened");
+    
+    var organizations = [
+        [req.body.org_ID]
+    ];
+    console.log(organizations);
+    
+    var sql = "DELETE FROM Organizations WHERE org_ID = ?";
+    con.query(sql, [organizations], function (err, result) {
+        if (err) throw err;
+           console.log("Number of records deleted: " + result.affectedRows);
+    });
+    
+    res.redirect("organizations");
+});
+
+//------------------------------------------------------------
+
+//LOCATIONS GET AND POST
+app.get("/locations", function(req, res){
+    con.query("SELECT * FROM Locations", function (err, result, fields) {
+        if (err) throw err;
+        res.render("locations", {locations: result});
+    });
+});
+
+app.post("/locations", function(req, res){
+    var sql = "INSERT INTO Locations (loc_Name) VALUES ?";
+    var locations = [
+        [req.body.loc_Name]
+    ];
+    con.query(sql, [locations], function(err, result){
+        if(err) throw err;
+        console.log("Number of records inserted: " + result.affectedRows);
+    });
+    res.redirect("locations");
+});
+//----------------------------------------------------------------
+
+//TO REMOVE LOCATIONS FROM DB
+app.get("/removeLocations", function(req, res){
+    res.redirect("locations");
+});
+
+app.post("/removeLocations", function(req, res){
+    console.log("something happened");
+    
+    var locations = [
+        [req.body.loc_ID]
+    ];
+    console.log(locations);
+    
+    var sql = "DELETE FROM Locations WHERE loc_ID = ?";
+    con.query(sql, [locations], function (err, result) {
+        if (err) throw err;
+           console.log("Number of records deleted: " + result.affectedRows);
+    });
+    
+    res.redirect("locations");
+});
 
 
 //Server initiation
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
 
