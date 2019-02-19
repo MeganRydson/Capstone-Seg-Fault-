@@ -25,31 +25,45 @@
                     <input type="text" name="org_BudgetCode" placeholder="Budget Code">
                 </div>
                 <div class="field">
-                        <input id="bottom" class="ui secondary button" type="submit" value="Submit">
+                        <input id="bottom" class="ui secondary button" type="submit" value="Add">
                     </div>
             </div>
         </div>
     </form>
     
     <br>
-    
+
     <table class="ui selectable inverted table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Budget Code</th>
+                <th>Remove or Edit</th>
             </tr>
         </thead>
+        
         <tbody>
             <% for(var i = 0; i < organizations.length; i++){ %>
             <tr>
                 <td><%= organizations[i].org_ID %></td>
                 <td><%= organizations[i].org_OrgName %></td>
                 <td><%= organizations[i].org_BudgetCode %></td>
+                <td>
+                    <form action="/organizations" method="POST">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type='hidden' name='org_ID' value= <%=organizations[i].org_ID%> />
+                                <input class="ui secondary button"  formaction="/removeOrganizations" type="submit" value="Remove">
+                            </div>
+                        </div>
+                    </form>
+                </td>
             </tr>
             <% } %>
         </tbody>
+        
+        
     </table>
     
 
