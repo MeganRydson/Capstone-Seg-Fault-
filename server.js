@@ -86,9 +86,9 @@ app.post("/locations", function(req, res){
 
 
 //TO REMOVE LOCATIONS FROM DB
-app.get("/removeLocations", function(req, res){
-    res.redirect("locations");
-});
+// app.get("/removeLocations", function(req, res){
+//     res.render;
+// });
 
 app.post("/removeLocations", function(req, res){
     console.log("something happened");
@@ -102,6 +102,28 @@ app.post("/removeLocations", function(req, res){
     con.query(sql, [locations], function (err, result) {
         if (err) throw err;
            console.log("Number of records deleted: " + result.affectedRows);
+    });
+    
+    res.redirect("locations");
+});
+
+//TO EDIT LOCATION INFO
+app.get("/editLocations", function(req, res){
+    res.redirect("locations");
+});
+
+app.post("/editLocations", function(req, res){
+    console.log("something happened");
+    
+    var locations = [
+        [req.body.loc_ID]
+    ];
+    console.log(locations);
+    
+    var sql = "UPDATE Locations SET loc_Name WHERE loc_ID = ?";
+    con.query(sql, [locations], function (err, result) {
+        if (err) throw err;
+           console.log("Number of records edited: " + result.affectedRows);
     });
     
     res.redirect("locations");
