@@ -62,6 +62,29 @@ app.post("/devices", function(req, res){
     res.redirect("devices");
 });
 
+//TO REMOVE DEVICE FROM DB
+app.get("/removeDevices", function(req, res){
+    res.redirect("devices");
+});
+
+app.post("/removeDevices", function(req, res){
+    console.log("something happened");
+
+    var devices = [
+        [req.body.dev_ID]
+    ];
+    console.log(devices);
+
+    var sql = "DELETE FROM Devices WHERE dev_ID = ?";
+    con.query(sql, [devices], function (err, result) {
+        if (err) throw err;
+           console.log("Number of records deleted: " + result.affectedRows);
+    });
+
+    res.redirect("devices");
+});
+
+
 //Server initiation
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server initiated (port " + process.env.PORT + ")...");

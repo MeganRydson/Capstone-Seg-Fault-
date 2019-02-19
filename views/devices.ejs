@@ -42,9 +42,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Serial #</th>
-                <th>Description</th>
-                <th>Available?</th>
+                <th>Edit or Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -52,11 +50,19 @@
             <tr>
                 <td><%= devices[i].dev_ID %></td>
                 <td><%= devices[i].dev_Name %></td>
-                <td><%= devices[i].dev_SN %></td>
-                <td><%= devices[i].dev_Description %></td>
-                <td><%= devices[i].dev_Available %></td>
+                <td>
+                    <form action="/devices" method="POST">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type='hidden' name='dev_ID' value= <%=devices[i].dev_ID%> />
+                                <input class="ui secondary button"  formaction="/removeDevices" type="submit" value="Remove">
+                            </div>
+                        </div>
+                    </form>
+                </td>
             </tr>
             <% } %>
+         
         </tbody>
     </table>
     
