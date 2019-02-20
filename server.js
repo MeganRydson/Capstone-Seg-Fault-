@@ -1,5 +1,5 @@
 var express             = require("express"),
-    parse               =  require("body-parser"),
+    parse               = require("body-parser"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
@@ -62,14 +62,11 @@ app.post("/removeDevices", function(req, res){
     var devices = [
         [req.body.dev_ID]
     ];
-    console.log(devices);
-
     var sql = "DELETE FROM Devices WHERE dev_ID = ?";
     con.query(sql, [devices], function (err, result) {
         if (err) throw err;
            console.log("Number of records deleted: " + result.affectedRows);
     });
-
     res.redirect("devices");
 });
 
@@ -98,19 +95,14 @@ app.post("/locations", function(req, res){
 
 //REMOVE
 app.post("/removeLocations", function(req, res){
-    console.log("something happened");
-    
     var locations = [
         [req.body.loc_ID]
     ];
-    console.log(locations);
-    
     var sql = "DELETE FROM Locations WHERE loc_ID = ?";
     con.query(sql, [locations], function (err, result) {
         if (err) throw err;
            console.log("Number of records deleted: " + result.affectedRows);
     });
-    
     res.redirect("locations");
 });
 
@@ -138,19 +130,14 @@ app.post("/organizations", function(req, res){
 
 //REMOVE
 app.post("/removeOrganizations", function(req, res){
-    console.log("something happened");
-    
     var organizations = [
         [req.body.org_ID]
     ];
-    console.log(organizations);
-    
     var sql = "DELETE FROM Organizations WHERE org_ID = ?";
     con.query(sql, [organizations], function (err, result) {
         if (err) throw err;
            console.log("Number of records deleted: " + result.affectedRows);
     });
-    
     res.redirect("organizations");
 });
 
