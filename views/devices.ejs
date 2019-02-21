@@ -13,7 +13,7 @@
     <br>
     <br>
     
-    <form action="/devices" method="POST">
+    <form class="add-form" action="/devices" method="POST">
         <div class="ui form">
             <div class="fields">
                 <div class="field">
@@ -38,6 +38,7 @@
     <br>
     
     <table class="ui selectable inverted table">
+        
         <thead>
             <tr>
                 <th>ID</th>
@@ -45,9 +46,10 @@
                 <th>Serial #</th>
                 <th>Description</th>
                 <th>Available?</th>
-                <th>Actions</th>
+                <th>Edit / Remove</th>
             </tr>
         </thead>
+        
         <tbody>
             <% for(var i = 0; i < devices.length; i++){ %>
             <tr>
@@ -55,12 +57,23 @@
                 <td><%= devices[i].dev_Name %></td>
                 <td><%= devices[i].dev_SN %></td>
                 <td><%= devices[i].dev_Description %></td>
-                <td><%= devices[i].dev_Available %></td>
                 <td>
+                    <% if(devices[i].dev_Active === 0){ %>
+                        Yes
+                    <% } else { %>
+                        No
+                    <% } %>
+                </td>
+                <td>
+                    <form action="/devices" method="POST">
+                        <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
+                        <input class="ui secondary button" formaction="/removeDevices" type="submit" value="Remove">
+                    </form>
                 </td>
             </tr>
             <% } %>
         </tbody>
+        
     </table>
     
 

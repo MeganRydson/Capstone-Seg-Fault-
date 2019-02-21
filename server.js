@@ -10,6 +10,7 @@ app.use(express.static(__dirname + "/public/"));
 app.use(parse.urlencoded({extended: true}));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
+
 //-------------------------------DB CONNECTION----------------------------------
 var con = db.createConnection({
     host     : 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
@@ -36,7 +37,7 @@ app.get("/", function(req, res){
 
 
 //-------------------------------DEVICES----------------------------------------
-//DEVICES GET AND POST
+//GET AND POST
 app.get("/devices", function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
@@ -56,9 +57,25 @@ app.post("/devices", function(req, res){
     res.redirect("devices");
 });
 
+//REMOVE
+app.post("/removeDevices", function(req, res){
+    var devices = [
+        [req.body.dev_ID]
+    ];
+    console.log(devices);
+
+    var sql = "DELETE FROM Devices WHERE dev_ID = ?";
+    con.query(sql, [devices], function (err, result) {
+        if (err) throw err;
+           console.log("Number of records deleted: " + result.affectedRows);
+    });
+
+    res.redirect("devices");
+});
+
 
 //-------------------------------LOCATIONS--------------------------------------
-//LOCATIONS GET AND POST
+//GET AND POST
 app.get("/locations", function(req, res){
     con.query("SELECT * FROM Locations", function (err, result, fields) {
         if (err) throw err;
@@ -79,13 +96,8 @@ app.post("/locations", function(req, res){
     res.redirect("locations");
 });
 
-//TO REMOVE LOCATIONS FROM DB
 
-app.get("/removeLocations", function(req, res){
-    res.render("locations");
-});
-
-
+//REMOVE
 app.post("/removeLocations", function(req, res){
     console.log("something happened");
     
@@ -127,6 +139,7 @@ app.post("/editLocations", function(req, res){
 
 
 //-------------------------------ORGANIZATIONS----------------------------------
+//GET AND POST
 app.get("/organizations", function(req, res){
     con.query("SELECT * FROM Organizations", function (err, result, fields) {
         if (err) throw err;
@@ -146,12 +159,7 @@ app.post("/organizations", function(req, res){
     res.redirect("organizations");
 });
 
-
-app.get("/removeOrganizations", function(req, res){
-    res.redirect("organizations");
-});
-
-
+//REMOVE
 app.post("/removeOrganizations", function(req, res){
     console.log("something happened");
     
