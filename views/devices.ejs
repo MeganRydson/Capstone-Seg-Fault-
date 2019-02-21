@@ -65,11 +65,11 @@
                     <% } %>
                 </td>
                 <td>
-                    <button class="ui secondary button">Edit</button>
-                    <div class="ui tiny modal">
+                    <button class="ui secondary button modal-pop" data-modal="<%= devices[i].dev_ID %>">Edit</button>
+                    <div class="ui tiny modal"  data-modal="<%= devices[i].dev_ID %>">
                         <div class="header">Edit <%= devices[i].dev_Name %></div>
                         <div class="content">
-                            <form action="/devices" method="POST">
+                            <form action="/devices">
                                 <div class="ui form">
                                     <div class="field">
                                         <label>Name</label>
@@ -103,7 +103,6 @@
                         <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
                         <input class="ui secondary button" formaction="/removeDevices" type="submit" value="Remove">
                     </form>
-                    
                 </td>
             </tr>
             <% } %>

@@ -2,6 +2,6 @@ $(document).ready(function(){
     $('.ui.checkbox').checkbox();
 });
 
-$("td > button").click(function(){
-    $('.ui.modal').modal('show');
+$('.modal-pop[data-modal]').click(function() {
+    $('.modal[data-modal=' + $(this).attr('data-modal') + ']').modal().modal('show');
 });
