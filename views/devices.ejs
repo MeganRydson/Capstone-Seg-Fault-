@@ -11,7 +11,6 @@
     <h1>Devices</h1>
     
     <br>
-    <br>
     
     <form class="add-form" action="/devices" method="POST">
         <div class="ui form">
@@ -37,7 +36,7 @@
     
     <br>
     
-    <table class="ui selectable inverted table">
+    <table class="ui selectable inverted striped table">
         
         <thead>
             <tr>
@@ -46,7 +45,7 @@
                 <th>Serial #</th>
                 <th>Description</th>
                 <th>Available?</th>
-                <th>Edit / Remove</th>
+                <th class="right aligned">Edit / Remove</th>
             </tr>
         </thead>
         
@@ -64,7 +63,7 @@
                         No
                     <% } %>
                 </td>
-                <td>
+                <td class="right aligned">
                     <button class="ui secondary button modal-pop" data-modal="<%= devices[i].dev_ID %>">Edit</button>
                     <div class="ui tiny modal"  data-modal="<%= devices[i].dev_ID %>">
                         <div class="header">Edit <%= devices[i].dev_Name %></div>

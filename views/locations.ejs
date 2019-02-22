@@ -11,7 +11,6 @@
     <h1>Locations</h1>
     
     <br>
-    <br>
     
     <form class="add-form" action="/locations" method="POST">
         <div class="ui form">
@@ -20,7 +19,6 @@
                     <label>Name</label>
                     <input type="text" name="loc_Name" placeholder="Name">
                 </div>
-                
                 <div class="field">
                     <input id="bottom" class="ui secondary button" type="submit" value="Add">
                 </div>
@@ -30,13 +28,13 @@
     
     <br>
     
-    <table class="ui selectable inverted table">
+    <table class="ui selectable inverted striped table">
         
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Locations</th>
-                <th>Edit / Remove</th>
+                <th class="right aligned">Edit / Remove</th>
             </tr>
         </thead>
         
@@ -45,7 +43,27 @@
             <tr>
                 <td><%= locations[i].loc_ID %></td>
                 <td><%= locations[i].loc_Name %></td>
-                <td>
+                <td class="right aligned">
+                    <button class="ui secondary button modal-pop" data-modal="<%= locations[i].loc_ID %>">Edit</button>
+                    <div class="ui tiny modal"  data-modal="<%= locations[i].loc_ID %>">
+                        <div class="header">Edit <%= locations[i].dev_Name %></div>
+                        <div class="content">
+                            <form action="/locations">
+                                <div class="ui form">
+                                    <div class="field">
+                                        <label>Name</label>
+                                        <input type="text" value="<%= locations[i].loc_Name %>">
+                                    </div>
+                                    <br>
+                                    <div class="ui buttons">
+                                        <button class="ui button">Cancel</button>
+                                        <div class="or"></div>
+                                        <button class="ui positive button" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <form action="/locations" method="POST">
                         <input type='hidden' name='loc_ID' value="<%= locations[i].loc_ID %>">
                         <input class="ui secondary button" formaction="/removeLocations" type="submit" value="Remove">
