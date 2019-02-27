@@ -50,34 +50,37 @@
                 <td><%= organizations[i].org_OrgName %></td>
                 <td><%= organizations[i].org_BudgetCode %></td>
                 <td class="right aligned">
+                    
                     <button class="ui secondary button modal-pop" data-modal="<%= organizations[i].org_ID %>">Edit</button>
+                    
                     <div class="ui tiny modal"  data-modal="<%= organizations[i].org_ID %>">
                         <div class="header">Edit <%= organizations[i].org_OrgName %></div>
                         <div class="content">
-                            <form action="/organizations">
+                            <form action="/organizations_edit" method="POST">
+                                <input type="hidden" name ="e_org_ID" value="<%= organizations[i].org_ID %>">
                                 <div class="ui form">
                                     <div class="field">
                                         <label>Name</label>
-                                        <input type="text" value="<%= organizations[i].org_OrgName %>">
+                                        <input type="text" name ="e_org_OrgName" value="<%= organizations[i].org_OrgName %>">
                                     </div>
                                     <div class="field">
                                         <label>Budget Code</label>
-                                        <input type="text" value="<%= organizations[i].org_BudgetCode %>">
+                                        <input type="text" name ="e_org_BudgetCode" value="<%= organizations[i].org_BudgetCode %>">
                                     </div>
                                     <br>
                                     <div class="ui buttons">
-                                        <button class="ui button">Cancel</button>
-                                        <div class="or"></div>
-                                        <button class="ui positive button" type="submit">Save</button>
+                                        <input class="ui positive button" type="submit" value="Save">
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <form action="/organizations" method="POST">
+                    
+                    <form action="/organizations_remove" method="POST">
                         <input type='hidden' name='org_ID' value="<%= organizations[i].org_ID %>">
-                        <input class="ui secondary button"  formaction="/removeOrganizations" type="submit" value="Remove">
+                        <input class="ui secondary button" type="submit" value="Remove">
                     </form>
+                    
                 </td>
             </tr>
             <% } %>

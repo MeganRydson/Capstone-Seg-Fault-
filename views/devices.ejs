@@ -64,44 +64,47 @@
                     <% } %>
                 </td>
                 <td class="right aligned">
+                    
                     <button class="ui secondary button modal-pop" data-modal="<%= devices[i].dev_ID %>">Edit</button>
-                    <div class="ui tiny modal"  data-modal="<%= devices[i].dev_ID %>">
+                    
+                    <div class="ui tiny modal" data-modal="<%= devices[i].dev_ID %>">
                         <div class="header">Edit <%= devices[i].dev_Name %></div>
                         <div class="content">
-                            <form action="/devices" method="POST">
+                            <form action="/devices_edit" method="POST">
+                                <input type="hidden" name ="e_dev_ID" value="<%= devices[i].dev_ID %>">
                                 <div class="ui form">
                                     <div class="field">
                                         <label>Name</label>
-                                        <input type="text" value="<%= devices[i].dev_Name %>">
+                                        <input type="text" name="e_dev_Name" value="<%= devices[i].dev_Name %>">
                                     </div>
                                     <div class="field">
                                         <label>Serial Number</label>
-                                        <input type="text" value="<%= devices[i].dev_SN %>">
+                                        <input type="text" name="e_dev_SN" value="<%= devices[i].dev_SN %>">
                                     </div>
                                     <div class="field">
                                         <label>Description</label>
-                                        <input type="text" value="<%= devices[i].dev_Description %>">
+                                        <input type="text" name="e_dev_Description" value="<%= devices[i].dev_Description %>">
                                     </div>
                                     <div class="field">
                                         <div class="ui checkbox">
-                                            <input name="Available" type="checkbox" class="hidden" value="<%= devices[i].dev_Active %>">
+                                            <input name="e_dev_Active" type="checkbox" class="hidden" value="<%= devices[i].dev_Active %>">
                                             <label>Available?</label>
                                         </div>
                                     </div>
                                     <br>
                                     <div class="ui buttons">
-                                        <button class="ui button">Cancel</button>
-                                        <div class="or"></div>
-                                        <input class="ui positive button" formaction="/editDevices" type="submit" value="Save">
+                                        <input class="ui positive button" type="submit" value="Save">
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <form action="/devices" method="POST">
+                    
+                    <form action="/devices_remove" method="POST">
                         <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
-                        <input class="ui secondary button" formaction="/removeDevices" type="submit" value="Remove">
+                        <input class="ui secondary button" type="submit" value="Remove">
                     </form>
+                    
                 </td>
             </tr>
             <% } %>
