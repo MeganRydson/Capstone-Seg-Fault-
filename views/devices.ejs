@@ -68,7 +68,7 @@
                     <div class="ui tiny modal"  data-modal="<%= devices[i].dev_ID %>">
                         <div class="header">Edit <%= devices[i].dev_Name %></div>
                         <div class="content">
-                            <form action="/devices">
+                            <form action="/devices" method="POST">
                                 <div class="ui form">
                                     <div class="field">
                                         <label>Name</label>
@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="field">
                                         <div class="ui checkbox">
-                                            <input type="checkbox" tabindex="0" class="hidden">
+                                            <input name="Available" type="checkbox" class="hidden" value="<%= devices[i].dev_Active %>">
                                             <label>Available?</label>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="ui buttons">
                                         <button class="ui button">Cancel</button>
                                         <div class="or"></div>
-                                        <button class="ui positive button" type="submit">Save</button>
+                                        <input class="ui positive button" formaction="/editDevices" type="submit" value="Save">
                                     </div>
                                 </div>
                             </form>

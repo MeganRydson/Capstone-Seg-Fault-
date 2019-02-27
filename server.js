@@ -57,7 +57,18 @@ app.post("/devices", function(req, res){
     res.redirect("devices");
 });
 
-//REMOVE
+//EDIT AND REMOVE
+app.post("/editDevices", function(req, res){
+    // var sql = "UPDATE Devices SET dev_Name = ? dev_SN = ? dev_Description = ? WHERE dev_ID = ?";
+    // var sql = "UPDATE Devices SET ? WHERE dev_ID = '" + req.body.dev_ID + "'";
+    var devices = [req.body.dev_Name, req.body.dev_SN, req.body.dev_Description, req.body.dev_ID];
+    // con.query(sql, [devices], function (err, result) {
+    //     if (err) throw err;
+    // });
+    console.log(devices);
+    res.redirect("devices");
+});
+
 app.post("/removeDevices", function(req, res){
     var devices = [
         [req.body.dev_ID]
@@ -93,7 +104,7 @@ app.post("/locations", function(req, res){
     res.redirect("locations");
 });
 
-//REMOVE
+//EDIT AND REMOVE
 app.post("/removeLocations", function(req, res){
     var locations = [
         [req.body.loc_ID]
@@ -128,7 +139,7 @@ app.post("/organizations", function(req, res){
     res.redirect("organizations");
 });
 
-//REMOVE
+//EDIT AND REMOVE
 app.post("/removeOrganizations", function(req, res){
     var organizations = [
         [req.body.org_ID]
