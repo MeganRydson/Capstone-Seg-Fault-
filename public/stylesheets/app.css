@@ -4,7 +4,12 @@
 /*********/
 
 body {
+    justify-content: center;
     background-color: rgb(150,150,170);
+}
+
+form {
+    display: inline-block;
 }
 
 h1 {
@@ -16,13 +21,24 @@ i {
 }
 
 table {
-    width: 70% !important;
+    /*display: block;*/
+    /*height: 550px;*/
+    /*overflow-y: scroll;*/
+    width: 850px !important;
     margin: 20px auto !important;
 }
 
+input {
+    display: block;
+}
+
 .add-form {
-    width: 70% !important;
+    width: 100% !important;
     margin: 20px auto !important;
+}
+
+.add-form div {
+    justify-content: center;
 }
 
 #bottom {

@@ -1,13 +1,19 @@
 var express             = require("express"),
-    parse               =  require("body-parser"),
+    parse               = require("body-parser"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
     app                 = express();
+    
+var indexRoutes         = require("./routes/index"),
+    deviceRoutes        = require("./routes/devices"),
+    locationRoutes      = require("./routes/locations"),
+    organizationRoutes  = require("./routes/organizations");
 
+
+app.use(parse.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
-app.use(parse.urlencoded({extended: true}));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
 
@@ -24,6 +30,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Connected to MySQL database.");
 });
+
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,6 +183,13 @@ app.post("/removeOrganizations", function(req, res){
     
     res.redirect("organizations");
 });
+
+//---------------------------------ROUTING--------------------------------------
+app.use(indexRoutes);
+app.use(deviceRoutes);
+app.use(locationRoutes);
+app.use(organizationRoutes);
+
 
 
 //-------------------------------SERVER INIT------------------------------------
