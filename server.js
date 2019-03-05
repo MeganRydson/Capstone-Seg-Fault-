@@ -16,7 +16,6 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
-
 //-------------------------------DB CONNECTION----------------------------------
 var con = db.createConnection({
     host     : 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
@@ -190,7 +189,9 @@ app.use(deviceRoutes);
 app.use(locationRoutes);
 app.use(organizationRoutes);
 
-
+app.get("/Login", function(req, res){
+    
+});
 
 //-------------------------------SERVER INIT------------------------------------
 app.listen(process.env.PORT, process.env.IP, function(){

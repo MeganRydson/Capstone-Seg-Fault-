@@ -2,8 +2,8 @@ var router  = require("express").Router();
 
 //------------------------------------------------------------------------------
 
-router.get("/", function(req, res){
-    res.render("home");
+router.get("/Login", function(req, res){
+    res.render("Login");
 });
 
 //------------------------------------------------------------------------------
