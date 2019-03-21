@@ -8,6 +8,7 @@ var express             = require("express"),
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
     locationRoutes      = require("./routes/locations"),
+    eventsRoutes        = require("./routes/events"),
     organizationRoutes  = require("./routes/organizations");
 
 
@@ -36,6 +37,7 @@ con.connect(function(err) {
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
+app.use(eventsRoutes);
 app.use(organizationRoutes);
 
 
