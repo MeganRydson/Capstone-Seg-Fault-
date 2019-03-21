@@ -38,7 +38,8 @@ con.connect(function(err) {
 
 //-------------------------------HOME-------------------------------------------
 app.get("/", function(req, res){
-    res.render("home");
+    //res.render("home");
+    res.redirect("Login");
 });
 
 

@@ -6,7 +6,6 @@
     </head>
     <body>
 
-<% include partials/navbar %>
 
 <div class="ui center aligned grid">
   <div class="column">
@@ -73,7 +72,7 @@
         // Uses SESSION persistence, so sign in is only valid for the current tab
         document.getElementById("signIn").onclick = function() {
 
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.session).then(function() {
                     var email = document.getElementById("email").value;
                     var password = document.getElementById("password").value;
                     return firebase.auth().signInWithEmailAndPassword(email, password);
@@ -86,7 +85,7 @@
 
         document.getElementById("createAccount").onclick = function() {
 
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function() {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.session).then(function() {
                     var email = document.getElementById("email").value;
                     var password = document.getElementById("password").value;
                     return firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {});
