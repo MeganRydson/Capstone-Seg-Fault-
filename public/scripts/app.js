@@ -5,7 +5,17 @@ $(document).ready(function() {
       .modal()
       .modal("show");
   });
-  $("#calendar").fullCalendar({
+   $("#calendar").fullCalendar({
     defaultView: "month",
-  });
+  // });
+//var calendar = new Calendar(document.getElementById("calendar"), {
+  events: events.map(function (event) {
+    return {
+      title: event.ev_Name,
+      start: event.ev_StartDate,
+      end: event.ev_EndDate,
+      allDay : false
+    }
+  })
+});
  });
