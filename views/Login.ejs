@@ -28,93 +28,11 @@
             </div>
             <br>
             <button class="ui fluid large black submit button btn-block mt-4" id="signIn">Login</button>
-            <br>
-            <div class="ui fluid large black submit button btn-block mt-4" id = "createAccount">Create Account</div>
           </div>
         </form>
     </h2>
     
-    <div id="signInInformation" class="mt-4">
-                <!-- Sign in information will appear here -->
-            </div>
-    
-
   </div>
 </div>
 
-
-
-
-<!-- Firebase setup script comes before other scripts -->
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
-    
-        
-         <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
-          <script>
-          // Initialize Firebase
-          var config = {
-            apiKey: "AIzaSyClHWmWIQb-cAIGRey77-xKK8N7Vp6qX3U",
-            authDomain: "segfault-capstone.firebaseapp.com",
-            databaseURL: "https://segfault-capstone.firebaseio.com",
-            projectId: "segfault-capstone",
-            storageBucket: "segfault-capstone.appspot.com",
-            messagingSenderId: "317469233720"
-          };
-          firebase.initializeApp(config);
-            
-          </script>
-    <script>
-    
-    
-        /*** Sign-In Button ***/
-        //
-        // Gets username and password from boxes
-        // Uses SESSION persistence, so sign in is only valid for the current tab
-        document.getElementById("signIn").onclick = function() {
-
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.session).then(function() {
-                    var email = document.getElementById("email").value;
-                    var password = document.getElementById("password").value;
-                    return firebase.auth().signInWithEmailAndPassword(email, password);
-                })
-                .catch(function(error) {
-                    document.getElementById('signInInformation').innerHTML = '<p>' + error.message + '</p>';
-                });
-        };
-
-
-        document.getElementById("createAccount").onclick = function() {
-
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.session).then(function() {
-                    var email = document.getElementById("email").value;
-                    var password = document.getElementById("password").value;
-                    return firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {});
-                })
-                .catch(function(error) {
-                    document.getElementById('signInInformation').innerHTML = '<p>' + error.message + '</p>';
-                });
-        };
-
-
-        /*** Sign In / Out Behavior ***/
-        //
-        // Triggers when user sign-in status changes
-        firebase.auth().onAuthStateChanged(function(user) {
-
-            // User is signed in
-            if (user) {
-
-                console.log(user);
-                window.location = '/devices'; //After successful login, user will be redirected to search.html
-            }
-
-            // User is signed out
-            else {
-                // Clear the posts div
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            }
-        });
-    </script>
-    
     <% include partials/footer %>
