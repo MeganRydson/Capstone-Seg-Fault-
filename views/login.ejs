@@ -49,14 +49,11 @@ rel="stylesheet"/>
         // The tokens are returned in the order requested by `responseType` above
         var accessToken = res[0];
         var idToken = res[1]
-
         // Say hello to the person who just signed in:
         console.log('Hello, ' + idToken.claims.email);
-
         // Save the tokens for later use, e.g. if the page gets refreshed:
         oktaSignIn.tokenManager.add('accessToken', accessToken);
         oktaSignIn.tokenManager.add('idToken', idToken);
-
         // Remove the tokens from the window location hash
         window.location.hash='';
       },
