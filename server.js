@@ -12,6 +12,7 @@ var express             = require("express"),
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
     locationRoutes      = require("./routes/locations"),
+    eventsRoutes        = require("./routes/events"),
     organizationRoutes  = require("./routes/organizations");
 
 
@@ -222,6 +223,7 @@ app.post("/removeOrganizations", function(req, res){
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
+app.use(eventsRoutes);
 app.use(organizationRoutes);
 
 
