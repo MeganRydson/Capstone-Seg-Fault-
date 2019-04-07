@@ -3,10 +3,6 @@ var router  = require("express").Router();
 
 //------------------------------------------------------------------------------
 
-<<<<<<< HEAD
-router.get("/Login", function(req, res){
-    res.render("Login");
-=======
 var con = db.createConnection({
     host     : 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
     port     : '3306',
@@ -23,7 +19,6 @@ router.get("/", function(req, res){
         if (err) throw err;
         res.render("home", {events: result});
     });
->>>>>>> 0b7c85088585be6da6ca2469820373fc0d206ebe
 });
 
 

@@ -7,7 +7,6 @@ var express             = require("express"),
     session             = require('express-session'),
     flash               = require('connect-flash'),
     session             = require('express-session'),
-    auth                = require('./auth.js');
     
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
@@ -21,15 +20,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
-// Tells app to use password session
-app.use(auth.initialize());
-app.use(auth.session());
-app.use(flash());
-app.use(session({ 
-        secret: 'some-secret',
-        saveUninitialized: false,
-        resave: true
-}));
+/
 
 //-------------------------------DB CONNECTION----------------------------------
 var con = db.createConnection({
@@ -53,31 +44,12 @@ con.connect(function(err) {
 
 //-------------------------------HOME-------------------------------------------
 app.get("/", function(req, res){
-    // //res.render("home");
-    res.redirect("Login");
-    // if(req.user) {
-    //         res.send(
-    //             '<p>You\'re logged in as <strong>' + req.user.username + '</strong>.</p>'
-    //             + '<p><a href="/logout">Log out</a></p>'
-    //         );
-    //     }
-    //     else {
-    //         res.send('<p><a href="/Login">Devices</a></p>');
-    //     }
+    //res.render("home");
+    res.render("Login");
+    
 });
 
 
-app.get('/login', function(req,res){
-    res.render()
-});
-
-app.post('/login', 
-        auth.authenticate('login', {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
-        })
-);
 //-------------------------------DEVICES----------------------------------------
 //GET AND POST
 app.get("/devices", function(req, res){
