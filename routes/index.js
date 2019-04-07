@@ -11,7 +11,12 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
+router.get("/login", function(req, res){
+    res.render("login");
+});
+
 router.get("/", function(req, res){
+    
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +
               "WHERE Events.ev_OrgID = Organizations.org_ID and " +
@@ -20,7 +25,6 @@ router.get("/", function(req, res){
         res.render("home", {events: result});
     });
 });
-
 
 //------------------------------------------------------------------------------
 

@@ -3,7 +3,9 @@ var express             = require("express"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
-    app                 = express();
+    app                 = express(),
+    OktaJwtVerifier     = require('@okta/jwt-verifier'),
+    cors = require('cors');
     
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
@@ -17,6 +19,40 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 
+//-------------------------------OKTA CONNECTION----------------------------------
+const oktaJwtVerifier = new OktaJwtVerifier({
+  issuer: 'https://dev-130586.okta.comt',
+  clientId: '0oafqgqv4eKur0kug356',
+  assertClaims: {
+    aud: 'api://default',
+  },
+});
+
+function authenticationRequired(req, res, next) {
+  const authHeader = req.headers.authorization || '';
+  const match = authHeader.match(/Bearer (.+)/);
+
+  if (!match) {
+    return res.status(401).end();
+  }
+
+  const accessToken = match[1];
+
+  return oktaJwtVerifier.verifyAccessToken(accessToken)
+    .then((jwt) => {
+      req.jwt = jwt;
+      next();
+    })
+    .catch((err) => {
+      res.status(401).send(err.message);
+    });
+}
+
+app.use(cors());
+
+app.get('/', authenticationRequired, (req, res) => {
+  res.json(req.jwt);
+});
 
 //-------------------------------DB CONNECTION----------------------------------
 var con = db.createConnection({
