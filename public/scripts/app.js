@@ -18,13 +18,4 @@ $(document).ready(function() {
     }
   })
 });
-<<<<<<< HEAD
-
-$('.modal-pop[data-modal]').click(function() {
-    $('.modal[data-modal=' + $(this).attr('data-modal') + ']').modal().modal('show');
-});
-
-
-=======
  });
->>>>>>> 0b7c85088585be6da6ca2469820373fc0d206ebe
