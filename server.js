@@ -46,10 +46,9 @@ con.connect(function(err) {
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
-app.use(eventsRoutes);
+app.use(eventRoutes);
 app.use(organizationRoutes);
 app.use(userRoutes);
-app.use(eventRoutes);
 app.use(transactionsRoutes);
 app.use(trans_uploadRoutes);
 
