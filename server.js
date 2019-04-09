@@ -17,6 +17,8 @@ var indexRoutes         = require("./routes/index"),
     trans_uploadRoutes  = require("./routes/trans_upload");
 
 
+
+
 app.use(parse.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
@@ -44,6 +46,7 @@ con.connect(function(err) {
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
+app.use(eventsRoutes);
 app.use(organizationRoutes);
 app.use(userRoutes);
 app.use(eventRoutes);

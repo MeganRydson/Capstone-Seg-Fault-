@@ -21,8 +21,16 @@ i {
 }
 
 table {
+<<<<<<< HEAD
     width: 1000px !important;
     margin: 20px auto !important;
+=======
+    /*display: block;*/
+    /*height: 550px;*/
+    /*overflow-y: scroll;*/
+   /* width: 1250px !important;*/
+   /* margin: 25px auto !important;*/
+>>>>>>> 0b7c85088585be6da6ca2469820373fc0d206ebe
 }
 
 input {
