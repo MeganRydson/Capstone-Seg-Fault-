@@ -1,0 +1,49 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Upload Transac File</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Upload Transac File</h1>
+    <br>
+        <form class="add-form" action="/trans_upload" method="POST">
+        <h3> >> Load Transactions...
+            <div class="ui secondary button">
+                <input type="file" id="fileUpload" name="tr_File" accept=".csv,.txt" nwdirectory>
+            </div>
+            <input id="top" class="ui secondary button" type="submit" value="Load File">
+        </h3> 
+        </form>
+    <br>
+
+    <table class="ui selectable inverted striped table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>LOADING ERROR</th>
+                <th>Trans Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Import Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i < transactions.length; i++){ %>
+            <tr>
+                <td><%= transactions[i].trerror_ID %></td>
+                <td><%= transactions[i].tre_ErrorDescr %></td>
+                <td><%= transactions[i].TransDt %></td>
+                <td><%= transactions[i].tre_DevDescr %></td>
+                <td><%= transactions[i].Amount %></td>
+                <td></button><%= transactions[i].ImpDt %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+
+<% include partials/footer %>

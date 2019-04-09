@@ -4,7 +4,7 @@
 /*********/
 
 body {
-    justify-content: center;
+    position: relative;
     background-color: rgb(150,150,170);
 }
 
@@ -21,10 +21,7 @@ i {
 }
 
 table {
-    /*display: block;*/
-    /*height: 550px;*/
-    /*overflow-y: scroll;*/
-    width: 850px !important;
+    width: 1000px !important;
     margin: 20px auto !important;
 }
 
@@ -35,6 +32,12 @@ input {
 .add-form {
     width: 100% !important;
     margin: 20px auto !important;
+}
+
+.add-event-form {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
 }
 
 .add-form div {

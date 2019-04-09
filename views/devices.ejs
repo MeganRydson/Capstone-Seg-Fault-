@@ -86,10 +86,16 @@
                                         <input type="text" name="e_dev_Description" value="<%= devices[i].dev_Description %>">
                                     </div>
                                     <div class="field">
-                                        <div class="ui checkbox">
-                                            <input name="e_dev_Active" type="checkbox" class="hidden" value="<%= devices[i].dev_Active %>">
-                                            <label>Available?</label>
-                                        </div>
+                                        <label>Available?</label>
+                                        <select class="ui search dropdown" name="e_dev_Active">
+                                            <% if(devices[i].dev_Active === 0){ %>
+                                                <option value="0">Yes</option>
+                                                <option value="1">No</option>
+                                            <% } else { %>
+                                                <option value="1">No</option>
+                                                <option value="0">Yes</option>
+                                            <% } %>
+                                        </select>
                                     </div>
                                     <br>
                                     <div class="ui buttons">

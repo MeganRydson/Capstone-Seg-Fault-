@@ -1,0 +1,79 @@
+<% include partials/header %>
+    
+        <title>SegFault | Events</title>
+        
+<% function format(date) { return date.toLocaleDateString("en-US"); } %>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Edit <%= event[0].ev_Name %></h1>
+    
+    <div class="add-event-form">
+        <form action="/events/<%= event[0].ev_ID %>?_method=PUT" method="POST">
+            <div class="ui form">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Event Name</label>
+                        <input type="text" name="ev_Name" value="<%= event[0].ev_Name %>">
+                    </div>
+                    <div class="field">
+                        <label>Organization</label>
+                        <select class="ui search dropdown" name="ev_OrgID">
+                            <% for(var i = 0; i < orgs.length; i++) { %>
+                                <option value="<%= orgs[i].org_ID %>">
+                                    <%= orgs[i].org_OrgName %>
+                                </option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Start Date</label>
+                        <input type="datetime-local" name="ev_StartDate" value="<%= event[0].DtStart %>">
+                    </div>
+                    <div class="field">
+                        <label>End Date</label>
+                        <input type="datetime-local" name="ev_EndDate" value="<%= event[0].DtEnd %>">
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Number of iPads</label>
+                        <select class="ui search dropdown" name="ev_QtyiPad">
+                            <% for(var i = 1; i <= 3; i++) { %>
+                                <% if(i == event[0].ev_QtyiPad) { %>
+                                    <option value="<%= i %>" selected><%= i %></option>
+                                <% } else { %>
+                                    <option value="<%= i %>"><%= i %></option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Number of Credit Card Terminals</label>
+                        <select class="ui search dropdown" name="ev_QtyCCR">
+                            <% for(var i = 1; i <= 3; i++) { %>
+                                <% if(i == event[0].ev_QtyCCR) { %>
+                                    <option value="<%= i %>" selected><%= i %></option>
+                                <% } else { %>
+                                    <option value="<%= i %>"><%= i %></option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                    <div class="field">
+                        <label>Notes</label>
+                        <textarea rows="5" placeholder="Notes" name="ev_Notes" maxlength="250"><%= event[0].ev_Notes %></textarea>
+                    </div>
+                
+                <button id="add-event-button" class="ui secondary button" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+<% include partials/footer %>
