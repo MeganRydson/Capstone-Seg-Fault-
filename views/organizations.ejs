@@ -29,10 +29,8 @@
             </div>
         </div>
     </form>
-    
-    <br>
 
-    <table class="ui selectable inverted striped table">
+    <table class="ui selectable inverted striped small table">
         
         <thead>
             <tr>
@@ -51,7 +49,7 @@
                 <td><%= organizations[i].org_BudgetCode %></td>
                 <td class="right aligned">
                     
-                    <button class="ui secondary button modal-pop" data-modal="<%= organizations[i].org_ID %>">Edit</button>
+                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= organizations[i].org_ID %>">Edit</button>
                     
                     <div class="ui tiny modal"  data-modal="<%= organizations[i].org_ID %>">
                         <div class="header">Edit <%= organizations[i].org_OrgName %></div>
@@ -78,7 +76,7 @@
                     
                     <form action="/organizations_remove" method="POST">
                         <input type='hidden' name='org_ID' value="<%= organizations[i].org_ID %>">
-                        <input class="ui secondary button" type="submit" value="Remove">
+                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
                     </form>
                     
                 </td>

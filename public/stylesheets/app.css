@@ -21,7 +21,7 @@ i {
 }
 
 table {
-    width: 1000px !important;
+    width: 1300px !important;
     margin: 20px auto !important;
 }
 
@@ -31,7 +31,7 @@ input {
 
 .add-form {
     width: 100% !important;
-    margin: 20px auto !important;
+    text-align: center;
 }
 
 .add-event-form {
@@ -42,6 +42,14 @@ input {
 
 .add-form div {
     justify-content: center;
+}
+
+.edit-button {
+    color: #FFFF7F !important;
+}
+
+.remove-button {
+    color: #FF7F7F !important;
 }
 
 #bottom {

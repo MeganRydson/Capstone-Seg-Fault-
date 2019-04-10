@@ -74,7 +74,7 @@ router.post("/trans_upload", function(req, res){
         }
        
     });
-    res.redirect("trans_upload");
+    res.redirect("/trans_upload");
 }); 
 
 module.exports = router;

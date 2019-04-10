@@ -30,7 +30,7 @@ router.post("/devices", function(req, res){
     con.query(sql, [devices], function(err, result){
         if(err) throw err;
     });
-    res.redirect("devices");
+    res.redirect("/devices");
 });
 
 //------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ router.post("/devices_edit", function(req, res){
     con.query(sql, devices, function (err, result) {
         if (err) throw err;
     });
-    res.redirect("devices");
+    res.redirect("/devices");
 });
 
 //------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ router.post("/devices_remove", function(req, res){
     con.query(sql, [devices], function (err, result) {
         if (err) throw err;
     });
-    res.redirect("devices");
+    res.redirect("/devices");
 });
 
 //------------------------------------------------------------------------------

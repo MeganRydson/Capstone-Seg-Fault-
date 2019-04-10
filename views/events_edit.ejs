@@ -23,9 +23,11 @@
                         <label>Organization</label>
                         <select class="ui search dropdown" name="ev_OrgID">
                             <% for(var i = 0; i < orgs.length; i++) { %>
-                                <option value="<%= orgs[i].org_ID %>">
-                                    <%= orgs[i].org_OrgName %>
-                                </option>
+                                <% if(orgs[i].org_ID == event[0].ev_OrgID) { %>
+                                    <option value="<%= orgs[i].org_ID %>" selected><%= orgs[i].org_OrgName %></option>
+                                <% } else { %>
+                                    <option value="<%= orgs[i].org_ID %>"><%= orgs[i].org_OrgName %></option>
+                                <% } %>
                             <% } %>
                         </select>
                     </div>
@@ -70,8 +72,23 @@
                         <label>Notes</label>
                         <textarea rows="5" placeholder="Notes" name="ev_Notes" maxlength="250"><%= event[0].ev_Notes %></textarea>
                     </div>
+                <div class="two fields">
+                    <div class="field">
+                        <select class="ui search dropdown" name="ev_Status">
+                            <% for(var i = 0; i < 6; i++) { %>
+                                <% if(event[0].ev_Status == i) { %>
+                                    <option value="<%= i %>" selected><%= status[i] %></option>
+                                <% } else { %>
+                                    <option value="<%= i %>"><%= status[i] %></option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <button id="add-event-button" class="ui secondary button" type="submit">Submit</button>
+                    </div>
+                </div>
                 
-                <button id="add-event-button" class="ui secondary button" type="submit">Submit</button>
             </div>
         </form>
     </div>
