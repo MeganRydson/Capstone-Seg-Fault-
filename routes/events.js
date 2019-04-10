@@ -22,6 +22,17 @@ router.get("/events", function(req, res){
 
 });
 
+router.get("/event-:ev_ID", function(req, res){
+    con.query("SELECT *, org_OrgName, user_Name " +
+              "FROM Events, Organizations, Users " +
+              "WHERE Events.ev_OrgID = Organizations.org_ID and " +
+              "Events.ev_UserID = Users.user_ID and Events.ev_ID = '" + req.params.ev_ID + "'", function (err, result, fields) {
+        if (err) throw err;
+        res.render("events", {events: result});
+    });
+
+});
+
 //------------------------------------------------------------------------------
 
 router.post("/events", function(req, res){
