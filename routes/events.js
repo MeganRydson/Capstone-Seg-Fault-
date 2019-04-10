@@ -81,7 +81,6 @@ router.get("/events/:id/edit", function(req, res){
     ];
     con.query(sql, [1, 2], function(err, result, fields){
         if (err) throw err;
-        console.log(result[0]);
         res.render("events_edit", {event: result[0], orgs: result[1], status: status});
     });
 });
