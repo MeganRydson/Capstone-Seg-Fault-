@@ -25,7 +25,7 @@ router.get("/transactions", function(req, res){
 
 //-------------------------------------------------------------------------------
 router.post("/transactions", function(req, res){
-    res.redirect("transactions");
+    res.redirect("/transactions");
 });
 
 module.exports = router;

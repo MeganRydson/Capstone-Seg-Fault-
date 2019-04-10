@@ -14,12 +14,20 @@ var con = db.createConnection({
 //------------------------------------------------------------------------------
 
 router.get("/events", function(req, res){
+    var status = [
+        "Pending",
+        "Denied",
+        "Approved",
+        "In Progress",
+        "Cancelled",
+        "Complete"
+    ];
     con.query("SELECT * " +
               "FROM Events, Organizations, Users " +
               "WHERE Events.ev_OrgID = Organizations.org_ID and " +
               "Events.ev_UserID = Users.user_ID", function (err, result, fields) {
         if (err) throw err;
-        res.render("events", {events: result});
+        res.render("events", {events: result, status: status});
     });
 });
 
@@ -53,27 +61,36 @@ router.post("/events", function(req, res){
         con.query(sql, [events], function(err, result){
             if(err) throw err;
         });
-        res.redirect("events");
+        res.redirect("/events");
     }
 });
 
 //------------------------------------------------------------------------------
 
 router.get("/events/:id/edit", function(req, res){
-     var sql = "SELECT Events.*, DATE_FORMAT(ev_StartDate,'%Y-%m-%dT%H:%m') AS DtStart, " +
-               "DATE_FORMAT(ev_EndDate,'%Y-%m-%dT%H:%m') AS DtEnd " +
-               "From Events WHERE ev_ID = " + req.params.id + "; SELECT * From Organizations";
+    var sql = "SELECT Events.*, DATE_FORMAT(ev_StartDate,'%Y-%m-%dT%H:%m') AS DtStart, " +
+              "DATE_FORMAT(ev_EndDate,'%Y-%m-%dT%H:%m') AS DtEnd " +
+              "From Events WHERE ev_ID = " + req.params.id + "; SELECT * From Organizations";
+    var status = [
+        "Pending",
+        "Denied",
+        "Approved",
+        "In Progress",
+        "Cancelled",
+        "Complete"
+    ];
     con.query(sql, [1, 2], function(err, result, fields){
         if (err) throw err;
-        res.render("events_edit", {event: result[0], orgs: result[1]});
+        console.log(result[0]);
+        res.render("events_edit", {event: result[0], orgs: result[1], status: status});
     });
 });
 
 //------------------------------------------------------------------------------
 
 router.put("/events/:id", function(req, res){
-    var sql = "UPDATE Events SET ev_QtyiPad = ?, ev_QtyiPad = ?, ev_Name = ?, " + 
-    "ev_OrgID = ?, ev_StartDate = ?, ev_EndDate = ?, ev_Notes = ? WHERE ev_ID = ?";
+    var sql = "UPDATE Events SET ev_QtyiPad = ?, ev_QtyCCR = ?, ev_Name = ?, " + 
+    "ev_OrgID = ?, ev_StartDate = ?, ev_EndDate = ?, ev_Notes = ?, ev_Status = ? WHERE ev_ID = ?";
     var events = [
         req.body.ev_QtyiPad,
         req.body.ev_QtyCCR,
@@ -82,13 +99,14 @@ router.put("/events/:id", function(req, res){
         req.body.ev_StartDate,
         req.body.ev_EndDate,
         req.body.ev_Notes,
-        req.body.ev_ID,
+        req.body.ev_Status,
+        req.params.id
     ];
-    if (req.body.e_ev_EndDate > req.body.e_ev_StartDate){
+    if (req.body.ev_EndDate > req.body.ev_StartDate){
         con.query(sql, events, function (err, result) {
             if (err) throw err;
         });
-        res.redirect("events");
+        res.redirect("/events");
     }
 });
 
@@ -102,7 +120,7 @@ router.post("/events_remove", function(req, res){
     con.query(sql, [events], function (err, result) {
         if (err) throw err;
     });
-    res.redirect("events");
+    res.redirect("/events");
 });
 
 //------------------------------------------------------------------------------

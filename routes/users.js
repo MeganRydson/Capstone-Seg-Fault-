@@ -31,7 +31,7 @@ router.post("/users", function(req, res){
     con.query(sql, [users], function(err, result){
         if(err) throw err;
     });
-    res.redirect("users");
+    res.redirect("/users");
 });
 
 //------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ router.post("/users_edit", function(req, res){
     con.query(sql, users, function (err, result) {
         if (err) throw err;
     });
-    res.redirect("users");
+    res.redirect("/users");
 });
 
 //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ router.post("/users_remove", function(req, res){
     con.query(sql, [users], function (err, result) {
         if (err) throw err;
     });
-    res.redirect("users");
+    res.redirect("/users");
 });
 
 //------------------------------------------------------------------------------

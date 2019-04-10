@@ -3,7 +3,36 @@
 
         <title>SegFault | Events</title>
         
-<% function format(date) { return date.toLocaleDateString("en-US"); } %>
+<%
+function format(date) {
+    return date.toLocaleDateString("en-US");
+} 
+%>
+
+<%
+function format1(d) {
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var date = d.getDate();
+    var day = d.getDay();
+    var hour = d.getHours();
+    var minute = d.getMinutes();
+    var ampm;
+    var weekday = ["Sun","Mon","Tue","Wed","Thurs","Fri","Sat"]
+    if(hour >= 13){
+        hour = hour - 12;
+    }
+    if(minute < 10){
+        minute = "0" + minute;
+    }
+    if(hour >= 12){
+        ampm = "PM";
+    } else {
+        ampm = "AM";
+    }
+    return weekday[day] + " " + month + "/" + date + "/" + year + " " + hour + ":" + minute + " " + ampm;
+} 
+%>
         
     </head>
     <body>
@@ -12,7 +41,13 @@
 
     <h1>Events</h1>
     
-    <table class="ui selectable inverted striped table">
+    <br>
+    
+    <div class="add-form">
+        <a id="centered" href="/events/new" class="ui secondary button">Request an Event</a>
+    </div>
+    
+    <table class="ui selectable inverted striped small celled table">
         
         <thead>
             <tr>
@@ -24,33 +59,34 @@
                 <th>Organization</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Status</th>
                 <th class="right aligned">Edit / Remove</th>
             </tr>
         </thead>
         
         <tbody>
             <% for(var i = 0; i < events.length; i++){ %>
-
-            <tr>
-                <td><%= events[i].ev_ID %></td>
-                <td><%= events[i].ev_DateCreated %></td>
-                <td><%= events[i].ev_QtyiPad %> / <%= events[i].ev_QtyCCR %></td>
-                <td><%= events[i].ev_Name %></td>
-                <td><%= events[i].user_Name %></td>
-                <td><%= events[i].org_OrgName %></td>
-                <td><%= events[i].ev_StartDate %></td>
-                <td><%= events[i].ev_EndDate %></td>
-                <td class="right aligned">
-                    
-                    <a class="ui secondary button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>
-                    
-                    <form action="/events_remove" method="POST">
-                        <input type='hidden' name='ev_ID' value="<%= events[i].ev_ID %>">
-                        <input class="ui secondary button" type="submit" value="Remove">
-                    </form>
-                    
-                </td>
-            </tr>
+                <tr>
+                    <td><%= events[i].ev_ID %></td>
+                    <td><%= format(events[i].ev_DateCreated) %></td>
+                    <td><%= events[i].ev_QtyiPad %> / <%= events[i].ev_QtyCCR %></td>
+                    <td><%= events[i].ev_Name %></td>
+                    <td><%= events[i].user_Name %></td>
+                    <td><%= events[i].org_OrgName %></td>
+                    <td><%= format1(events[i].ev_StartDate) %></td>
+                    <td><%= format1(events[i].ev_EndDate) %></td>
+                    <td><%= status[events[i].ev_Status] %></td>
+                    <td class="right aligned">
+                        
+                        <a class="ui secondary mini button edit-button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>
+                        
+                        <form action="/events_remove" method="POST">
+                            <input type='hidden' name='ev_ID' value="<%= events[i].ev_ID %>">
+                            <input class="ui mini secondary button remove-button" type="submit" value="Remove">
+                        </form>
+                        
+                    </td>
+                </tr>
             <% } %>
         </tbody>
         

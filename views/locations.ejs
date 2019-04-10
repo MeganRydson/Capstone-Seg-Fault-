@@ -26,9 +26,7 @@
         </div>
     </form>
     
-    <br>
-    
-    <table class="ui selectable inverted striped table">
+    <table class="ui selectable inverted striped small table">
         
         <thead>
             <tr>
@@ -45,7 +43,7 @@
                 <td><%= locations[i].loc_Name %></td>
                 <td class="right aligned">
                     
-                    <button class="ui secondary button modal-pop" data-modal="<%= locations[i].loc_ID %>">Edit</button>
+                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= locations[i].loc_ID %>">Edit</button>
                     
                     <div class="ui tiny modal"  data-modal="<%= locations[i].loc_ID %>">
                         <div class="header">Edit <%= locations[i].dev_Name %></div>
@@ -68,7 +66,7 @@
                     
                     <form action="/locations_remove" method="POST">
                         <input type='hidden' name='loc_ID' value="<%= locations[i].loc_ID %>">
-                        <input class="ui secondary button" type="submit" value="Remove">
+                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
                     </form>
                     
                 </td>
