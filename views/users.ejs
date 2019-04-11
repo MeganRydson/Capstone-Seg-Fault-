@@ -1,0 +1,128 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Users</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Users</h1>
+    
+    <br>
+    
+    <form class="add-form" action="/users" method="POST">
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="user_Name" placeholder="Name">
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" name="user_Email" placeholder="Email">
+                </div>
+                <div class="field">
+                    <label>Phone Number</label>
+                    <input type="tel" name="user_Phone" placeholder="Phone Number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    <span><i>XXX-XXX-XXXX</i></span>
+                </div>
+                <div class="field">
+                    <label>Type</label>
+                    <select class="ui search dropdown" name="user_Type">
+                        <option value="0">Client</option>
+                        <option value="1">Employee</option>
+                        <option value="2">Admin</option>
+                    </select>
+                </div>
+                <div class="field">
+                        <input id="bottom" class="ui secondary button" type="submit" value="Add">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="ui selectable inverted striped small table">
+        
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Type</th>
+                <th class="right aligned">Edit / Remove</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% for(var i = 0; i < users.length; i++){ %>
+            <tr>
+                <td><%= users[i].user_ID %></td>
+                <td><%= users[i].user_Name %></td>
+                <td><%= users[i].user_Email %></td>
+                <td><%= users[i].user_Phone %></td>
+                <td>
+                    <% if(users[i].user_Type === 0){ %>
+                        Client
+                    <% } else if(users[i].user_Type === 1){ %>
+                        Employee
+                    <% } else { %>
+                        Admin
+                    <% } %>
+                </td>
+                <td class="right aligned">
+                    
+                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= users[i].user_ID %>">Edit</button>
+                    
+                    <div class="ui tiny modal"  data-modal="<%= users[i].user_ID %>">
+                        <div class="header">Edit <%= users[i].user_Name %></div>
+                        <div class="content">
+                            <form action="/users_edit" method="POST">
+                                <input type="hidden" name ="e_user_ID" value="<%= users[i].user_ID %>">
+                                <div class="ui form">
+                                    <div class="field">
+                                        <label>Name</label>
+                                        <input type="text" name ="e_user_Name" value="<%= users[i].user_Name %>">
+                                    </div>
+                                    <div class="field">
+                                        <label>Email</label>
+                                        <input type="email" name ="e_user_Email" value="<%= users[i].user_Email %>">
+                                    </div>
+                                    <div class="field">
+                                        <label>Phone Number</label>
+                                        <input type="tel" name ="e_user_Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= users[i].user_Phone %>">
+                                        <span><i>XXX-XXX-XXXX</i></span>
+                                    </div>
+                                    <div class="field">
+                                        <label>Type</label>
+                                        <select class="ui search dropdown" name="e_user_Type">
+                                            <option value="0">Client</option>
+                                            <option value="1">Employee</option>
+                                            <option value="2">Admin</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="ui buttons">
+                                        <input class="ui positive button" type="submit" value="Save">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <form action="/users_remove" method="POST">
+                        <input type='hidden' name='user_ID' value="<%= users[i].user_ID %>">
+                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
+                    </form>
+                    
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+        
+    </table>
+    
+
+<% include partials/footer %>

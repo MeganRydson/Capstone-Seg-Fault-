@@ -3,56 +3,26 @@ var express             = require("express"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
-    app                 = express(),
-    OktaJwtVerifier     = require('@okta/jwt-verifier'),
-    cors = require('cors');
-    
+    methodOverride      = require("method-override"),
+    path                = require("path"),
+    app                 = express();
+
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
     locationRoutes      = require("./routes/locations"),
-    eventsRoutes        = require("./routes/events"),
-    organizationRoutes  = require("./routes/organizations");
+    organizationRoutes  = require("./routes/organizations"),
+    userRoutes          = require("./routes/users"),
+    eventRoutes         = require("./routes/events"),
+    transactionsRoutes  = require("./routes/transactions"),
+    trans_uploadRoutes  = require("./routes/trans_upload");
 
 
 app.use(parse.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
+app.use(methodOverride("_method"));
 
-//-------------------------------OKTA CONNECTION----------------------------------
-const oktaJwtVerifier = new OktaJwtVerifier({
-  issuer: 'https://dev-130586.okta.comt',
-  clientId: '0oafqgqv4eKur0kug356',
-  assertClaims: {
-    aud: 'api://default',
-  },
-});
-
-function authenticationRequired(req, res, next) {
-  const authHeader = req.headers.authorization || '';
-  const match = authHeader.match(/Bearer (.+)/);
-
-  if (!match) {
-    return res.status(401).end();
-  }
-
-  const accessToken = match[1];
-
-  return oktaJwtVerifier.verifyAccessToken(accessToken)
-    .then((jwt) => {
-      req.jwt = jwt;
-      next();
-    })
-    .catch((err) => {
-      res.status(401).send(err.message);
-    });
-}
-
-app.use(cors());
-
-app.get('/', authenticationRequired, (req, res) => {
-  res.json(req.jwt);
-});
 
 //-------------------------------DB CONNECTION----------------------------------
 var con = db.createConnection({
@@ -60,7 +30,8 @@ var con = db.createConnection({
     port     : '3306',
     user     : 'Segfaultcapstone',
     password : 'S3gfault2019',
-    database : 'db-segfault-cap'
+    database : 'db-segfault-cap',
+    multipleStatements: true
 });
 
 con.connect(function(err) {
@@ -73,8 +44,11 @@ con.connect(function(err) {
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
-app.use(eventsRoutes);
+app.use(eventRoutes);
 app.use(organizationRoutes);
+app.use(userRoutes);
+app.use(transactionsRoutes);
+app.use(trans_uploadRoutes);
 
 
 //-------------------------------SERVER INIT------------------------------------

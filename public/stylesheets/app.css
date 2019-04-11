@@ -4,7 +4,7 @@
 /*********/
 
 body {
-    justify-content: center;
+    position: relative;
     background-color: rgb(150,150,170);
 }
 
@@ -21,11 +21,8 @@ i {
 }
 
 table {
-    /*display: block;*/
-    /*height: 550px;*/
-    /*overflow-y: scroll;*/
-   /* width: 1250px !important;*/
-   /* margin: 25px auto !important;*/
+    width: 1300px !important;
+    margin: 20px auto !important;
 }
 
 input {
@@ -34,11 +31,25 @@ input {
 
 .add-form {
     width: 100% !important;
-    margin: 20px auto !important;
+    text-align: center;
+}
+
+.add-event-form {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
 }
 
 .add-form div {
     justify-content: center;
+}
+
+.edit-button {
+    color: #FFFF7F !important;
+}
+
+.remove-button {
+    color: #FF7F7F !important;
 }
 
 #bottom {

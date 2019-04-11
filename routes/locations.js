@@ -28,7 +28,7 @@ router.post("/locations", function(req, res){
     con.query(sql, [locations], function(err, result){
         if(err) throw err;
     });
-    res.redirect("locations");
+    res.redirect("/locations");
 });
 
 //------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ router.post("/locations_edit", function(req, res){
     con.query(sql, locations, function (err, result) {
         if (err) throw err;
     });
-    res.redirect("locations");
+    res.redirect("/locations");
 });
 
 //------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ router.post("/locations_remove", function(req, res){
     con.query(sql, [locations], function (err, result) {
         if (err) throw err;
     });
-    res.redirect("locations");
+    res.redirect("/locations");
 });
 
 //------------------------------------------------------------------------------
