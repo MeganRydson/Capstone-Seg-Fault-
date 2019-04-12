@@ -12,7 +12,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-http-to-https": "^1.1.4",
-    "express-session": "^1.15.6",
+    "express-session": "^1.16.1",
     "firebase": "^5.8.4",
     "firebase-admin": "^7.0.0",
     "firebaseui": "^3.5.2",
