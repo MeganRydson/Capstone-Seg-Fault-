@@ -5,7 +5,7 @@ $(document).ready(function() {
       .modal()
       .modal("show");
   });
-<<<<<<< HEAD
+
   if (typeof events === "object") {
     $("#calendar").fullCalendar({
       defaultView: "month",
@@ -38,7 +38,7 @@ $(document).ready(function() {
     }
   })
 });
- });
+
 
 $('.modal-pop[data-modal]').click(function() {
     $('.modal[data-modal=' + $(this).attr('data-modal') + ']').modal().modal('show');
