@@ -1,0 +1,42 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Transactions</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Transactions</h1>
+   
+
+    <table class="ui selectable inverted striped table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Device</th>
+                <th>Amount</th>
+                <th>Event</th>
+                <th>Import Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i < transactions.length; i++){ %>
+            <tr>
+                <td><%= transactions[i].ID %></td>
+                <td><%= transactions[i].TrDate %></td>
+                <td><%= transactions[i].tr_Description %></td>
+                <td><%= transactions[i].dev_Name %></td>
+                <td><%= transactions[i].Amount %></td>
+                <td><%= transactions[i].ev_Name %></td>
+                <td></button><%= transactions[i].ImpDate %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+
+<% include partials/footer %>

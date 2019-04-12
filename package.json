@@ -9,8 +9,12 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-http-to-https": "^1.1.4",
+<<<<<<< HEAD
+    "method-override": "^3.0.0",
+=======
     "mongodb": "^2.2.36",
     "mongoskin": "^2.1.0",
+>>>>>>> 0b7c85088585be6da6ca2469820373fc0d206ebe
     "mysql": "^2.16.0",
     "nodemailer": "^5.1.1",
     "semantic-ui": "^2.4.2",

@@ -30,7 +30,7 @@ router.post("/organizations", function(req, res){
         if(err) throw err;
         console.log("Number of records inserted: " + result.affectedRows);
     });
-    res.redirect("organizations");
+    res.redirect("/organizations");
 });
 
 //------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ router.post("/organizations_edit", function(req, res){
     con.query(sql, organizations, function (err, result) {
         if (err) throw err;
     });
-    res.redirect("organizations");
+    res.redirect("/organizations");
 });
 
 //------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ router.post("/organizations_remove", function(req, res){
     con.query(sql, [organizations], function (err, result) {
         if (err) throw err;
     });
-    res.redirect("organizations");
+    res.redirect("/organizations");
 });
 
 //------------------------------------------------------------------------------

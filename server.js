@@ -3,20 +3,31 @@ var express             = require("express"),
     db                  = require("mysql"),
     mailer              = require("nodemailer"),
     redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
+    methodOverride      = require("method-override"),
+    path                = require("path"),
     app                 = express();
     
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
     locationRoutes      = require("./routes/locations"),
+<<<<<<< HEAD
     eventsRoutes        = require("./routes/events"),
     organizationRoutes  = require("./routes/organizations");
     settlementsRoutes   = require("./routes/settlements");
+=======
+    organizationRoutes  = require("./routes/organizations"),
+    userRoutes          = require("./routes/users"),
+    eventRoutes         = require("./routes/events"),
+    transactionsRoutes  = require("./routes/transactions"),
+    trans_uploadRoutes  = require("./routes/trans_upload");
+>>>>>>> c279779c0670e8a42b99da4fe6ea7d346263537f
 
 
 app.use(parse.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
+app.use(methodOverride("_method"));
 
 
 //-------------------------------DB CONNECTION----------------------------------
@@ -25,7 +36,8 @@ var con = db.createConnection({
     port     : '3306',
     user     : 'Segfaultcapstone',
     password : 'S3gfault2019',
-    database : 'db-segfault-cap'
+    database : 'db-segfault-cap',
+    multipleStatements: true
 });
 
 con.connect(function(err) {
@@ -38,9 +50,15 @@ con.connect(function(err) {
 app.use(indexRoutes);
 app.use(deviceRoutes);
 app.use(locationRoutes);
-app.use(eventsRoutes);
+app.use(eventRoutes);
 app.use(organizationRoutes);
+<<<<<<< HEAD
 app.use(settlementsRoutes);
+=======
+app.use(userRoutes);
+app.use(transactionsRoutes);
+app.use(trans_uploadRoutes);
+>>>>>>> c279779c0670e8a42b99da4fe6ea7d346263537f
 
 
 //-------------------------------SERVER INIT------------------------------------

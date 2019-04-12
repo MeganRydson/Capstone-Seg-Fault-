@@ -1,0 +1,71 @@
+<% include partials/header %>
+
+        <title>SegFault | Request an Event</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Request an Event</h1>
+    
+    <br>
+    
+    <div class="add-event-form">
+        <form action="/events" method="POST">
+            <div class="ui form">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Event Name</label>
+                        <input type="text" name="ev_Name" placeholder="Event Name">
+                    </div>
+                    <div class="field">
+                        <label>Organization</label>
+                        <select class="ui search dropdown" name="ev_OrgID">
+                            <% for(var i = 0; i < orgs.length; i++) { %>
+                                <option value="<%= orgs[i].org_ID %>">
+                                    <%= orgs[i].org_OrgName %>
+                                </option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Start Date</label>
+                        <input type="datetime-local" name="ev_StartDate" placeholder="Start Date">
+                    </div>
+                    <div class="field">
+                        <label>End Date</label>
+                        <input type="datetime-local" name="ev_EndDate" placeholder="End Date">
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Number of iPads</label>
+                        <select class="ui search dropdown" name="ev_QtyiPad">
+                            <% for(var i = 1; i <= 3; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Number of Credit Card Terminals</label>
+                        <select class="ui search dropdown" name="ev_QtyCCR">
+                            <% for(var i = 1; i <= 3; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                    <div class="field">
+                        <label>Notes</label>
+                        <textarea rows="5" placeholder="Notes" name="ev_Notes" maxlength="250"></textarea>
+                    </div>
+                
+                <button id="add-event-button" class="ui secondary button" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+<% include partials/footer %>
