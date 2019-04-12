@@ -30,7 +30,7 @@ router.post("/register", function(req, res){
            return res.render('register');
        } 
        passport.authenticate("local")(req, res, function(){
-          res.redirect("./secret");
+          res.redirect("/");
        });
     });
 });
