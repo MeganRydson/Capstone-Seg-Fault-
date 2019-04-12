@@ -1,0 +1,26 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Login</title>
+</head>
+<body>
+
+    <h1> Sign Up Form</h1>
+    <div class="ui center aligned grid">
+    <div class="column" >
+    <div  class="ui inverted form">
+        <form action= "/register" method = "POST">
+        <input type = "text" name = "username" placeholder = "username">
+        <br>
+        <input type = "text" name = "password" placeholder = "password">
+        <br>
+        <button class="ui button">Submit</button>
+         </form>
+      </div>
+      <a href="/login">Already have an account? Log in here!</a>
+      </div> 
+      </div>
+    </div>
+    
+    
+ <% include partials/footer %>

@@ -1,12 +1,16 @@
-var express             = require("express"),
-    parse               = require("body-parser"),
-    db                  = require("mysql"),
-    mailer              = require("nodemailer"),
-    redirectToHTTPS     = require("express-http-to-https").redirectToHTTPS,
-    methodOverride      = require("method-override"),
-    path                = require("path"),
-    app                 = express();
-    
+var express                 = require("express"),
+    parse                   = require("body-parser"),
+    db                      = require("mysql"),
+    mailer                  = require("nodemailer"),
+    redirectToHTTPS         = require("express-http-to-https").redirectToHTTPS,
+    methodOverride          = require("method-override"),
+    path                    = require("path"),
+    mongoose                = require("mongoose"),
+    passport                = require("passport"),
+    LocalStrategy           = require("passport-local"),
+    passportLocalMongoose   = require("passport-local-mongoose"), 
+    app                     = express();
+
 var indexRoutes         = require("./routes/index"),
     deviceRoutes        = require("./routes/devices"),
     locationRoutes      = require("./routes/locations"),
@@ -14,7 +18,8 @@ var indexRoutes         = require("./routes/index"),
     userRoutes          = require("./routes/users"),
     eventRoutes         = require("./routes/events"),
     transactionsRoutes  = require("./routes/transactions"),
-    trans_uploadRoutes  = require("./routes/trans_upload");
+    trans_uploadRoutes  = require("./routes/trans_upload"),
+    User                = require("./routes/models/user");
 
 
 app.use(parse.urlencoded({extended: true}));
@@ -22,6 +27,37 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 app.use(methodOverride("_method"));
+app.use(parse.urlencoded({extended: true})); 
+
+
+app.use(require("express-session")({
+    secret: "Capstone Project",
+    resave: false,
+    saveUnitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 1000000 //1 hour
+    }
+}));
+
+//Session handlers
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+mongoose.connect("mongodb://localhost/authentication", { useNewUrlParser: true });
+
+//-------------------------------Middleware----------------------------------
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 
 //-------------------------------DB CONNECTION----------------------------------
@@ -49,6 +85,7 @@ app.use(organizationRoutes);
 app.use(userRoutes);
 app.use(transactionsRoutes);
 app.use(trans_uploadRoutes);
+app.use(User);
 
 
 //-------------------------------SERVER INIT------------------------------------
