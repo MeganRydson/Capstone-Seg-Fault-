@@ -3,7 +3,6 @@ var router  = require("express").Router();
 var User    = require("./models/user");
 var passport = require("passport");
 
-//passport.use(new LocalStrategy(User.authenticate()));
 
 //------------------------------------------------------------------------------
 
@@ -16,10 +15,6 @@ var con = db.createConnection({
 });
 
 //-------------------------------Auth Routes----------------------------------
-router.get("/secret", isLoggedIn, function(req, res){
-    res.render("secret");
-});
-
 //show sign up form
 router.get("/register", function(req, res){
     res.render("register");
@@ -71,7 +66,7 @@ function isLoggedIn(req, res, next){
 }
 
 
-router.get("/",  function(req, res){
+router.get("/",  isLoggedIn, function(req, res){
     
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +

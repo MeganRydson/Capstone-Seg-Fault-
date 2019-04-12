@@ -28,15 +28,21 @@ app.use(express.static(__dirname + "/public/"));
 app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 app.use(methodOverride("_method"));
 app.use(parse.urlencoded({extended: true})); 
-app.use(passport.initialize());
-app.use(passport.session());
+
+
 app.use(require("express-session")({
     secret: "Capstone Project",
     resave: false,
-    saveUnitialized: false
+    saveUnitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 1000000 //1 hour
+    }
 }));
 
 //Session handlers
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
