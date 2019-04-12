@@ -1,5 +1,9 @@
 var db      = require("mysql");
 var router  = require("express").Router();
+var User    = require("./models/user");
+var passport = require("passport");
+
+//passport.use(new LocalStrategy(User.authenticate()));
 
 //------------------------------------------------------------------------------
 
@@ -11,11 +15,63 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
+//-------------------------------Auth Routes----------------------------------
+router.get("/secret", isLoggedIn, function(req, res){
+    res.render("secret");
+});
+
+//show sign up form
+router.get("/register", function(req, res){
+    res.render("register");
+});
+
+//handling user sign up
+router.post("/register", function(req, res){
+    req.body.username
+    req.body.password
+    User.register(new User({username: req.body.username}), req.body.password, function(err,user){
+       if(err){
+           console.log(err);
+           return res.render('register');
+       } 
+       passport.authenticate("local")(req, res, function(){
+          res.redirect("./secret");
+       });
+    });
+});
+
+
+//Log In Routes
 router.get("/login", function(req, res){
     res.render("login");
 });
 
-router.get("/", function(req, res){
+//log in login
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login"
+}) ,function(req, res){
+});
+
+
+//Sign Out Routes
+router.get("/signOut", function(req, res){
+    req.logout();
+    res.redirect("/login");
+});
+
+
+//-------------------------------Middleware----------------------------------
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
+
+router.get("/",  function(req, res){
     
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +

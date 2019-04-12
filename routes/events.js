@@ -10,10 +10,19 @@ var con = db.createConnection({
     multipleStatements: true
 });
 
+//-------------------------------Middleware----------------------------------
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
 
 //------------------------------------------------------------------------------
 
-router.get("/events", function(req, res){
+router.get("/events", isLoggedIn, function(req, res){
     var status = [
         "Pending",
         "Denied",

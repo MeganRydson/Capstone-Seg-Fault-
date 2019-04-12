@@ -10,8 +10,17 @@ var con = db.createConnection({
 
 var tbl_arry = [];
 
+//-------------------------------Middleware----------------------------------
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
 //-Transactions Grid -----------------------------------------------------------
-router.get("/trans_upload", function(req, res){
+router.get("/trans_upload", isLoggedIn, function(req, res){
     con.query("SELECT Trans_Errors_Log.*, DATE_FORMAT(tre_TransDt, '%m/%d/%Y %l:%i %p') AS TransDt, " +
               "DATE_FORMAT(tre_CurDt, '%m/%d/%Y %l:%i %p') AS ImpDt, " + 
               "CONCAT('$ ',FORMAT(tre_TransAmt, 2)) AS Amount " +
