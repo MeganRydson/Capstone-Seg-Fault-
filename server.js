@@ -20,6 +20,7 @@ var indexRoutes         = require("./routes/index"),
     transactionsRoutes  = require("./routes/transactions"),
     trans_uploadRoutes  = require("./routes/trans_upload"),
     User                = require("./routes/models/user");
+    
 
 
 app.use(parse.urlencoded({extended: true}));
@@ -33,7 +34,7 @@ app.use(parse.urlencoded({extended: true}));
 app.use(require("express-session")({
     secret: "Capstone Project",
     resave: false,
-    saveUnitialized: false,
+    saveUninitialized: false,
     cookie: {
         secure: false,
         maxAge: 1000000 //1 hour
@@ -48,8 +49,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-mongoose.connect("mongodb://localhost/authentication", { useNewUrlParser: true });
-
+//mongoose.connect("mongodb://localhost/authentication", { useNewUrlParser: true });
+mongoose.connect('mongodb://admin:admin2019@ds227469.mlab.com:27469/heroku_2tgc288r', { useNewUrlParser: true },function(){
+    console.log('connected to mongodb');
+});
 //-------------------------------Middleware----------------------------------
 
 function isLoggedIn(req, res, next){

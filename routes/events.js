@@ -21,8 +21,8 @@ function isLoggedIn(req, res, next){
 
 
 //------------------------------------------------------------------------------
-
-router.get("/events", isLoggedIn, function(req, res){
+//isLoggedIn
+router.get("/events",  function(req, res){
     var status = [
         "Pending",
         "Denied",

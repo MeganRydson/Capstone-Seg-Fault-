@@ -20,7 +20,8 @@ function isLoggedIn(req, res, next){
 }
 
 //-Transactions Grid -----------------------------------------------------------
-router.get("/transactions", isLoggedIn, function(req, res){
+//isLoggedIn,
+router.get("/transactions",  function(req, res){
     con.query("SELECT Transactions.*, DATE_FORMAT(tr_Date, '%m/%d/%Y %l:%i %p') AS TrDate," +
               "DATE_FORMAT(tr_ImportDate, '%m/%d/%Y %l:%i %p') AS ImpDate," +
               "CONCAT('$ ',FORMAT(tr_Amt, 2)) AS Amount, " +
