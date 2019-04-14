@@ -66,7 +66,7 @@ function isLoggedIn(req, res, next){
 }
 
 //isLoggedIn
-router.get("/",   function(req, res){
+router.get("/", isLoggedIn,  function(req, res){
     
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +

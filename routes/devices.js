@@ -21,7 +21,7 @@ function isLoggedIn(req, res, next){
 
 //------------------------------------------------------------------------------
 //isLoggedIn 
-router.get("/devices", function(req, res){
+router.get("/devices", isLoggedIn, function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
         res.render("devices", {devices: result});
@@ -35,7 +35,7 @@ router.post("/devices", function(req, res){
     var devices = [[
         req.body.dev_Name,
         req.body.dev_SN,
-        req.body.dev_Description
+        req.body.dev_Description 
     ]];
     con.query(sql, [devices], function(err, result){
         if(err) throw err;
