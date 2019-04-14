@@ -14,7 +14,10 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1007d2e3bb4eb10920d703beb44bc079c26e7748
 //-------------------------------Auth Routes----------------------------------
 //show sign up form
 router.get("/register", function(req, res){
@@ -66,9 +69,15 @@ function isLoggedIn(req, res, next){
     res.redirect("/login");
 }
 
+<<<<<<< HEAD
 
 router.get("/",  isLoggedIn, function(req, res){
 
+=======
+//isLoggedIn
+router.get("/", isLoggedIn,  function(req, res){
+    
+>>>>>>> 1007d2e3bb4eb10920d703beb44bc079c26e7748
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +
               "WHERE Events.ev_OrgID = Organizations.org_ID and " +
@@ -77,7 +86,6 @@ router.get("/",  isLoggedIn, function(req, res){
         res.render("home", {events: result});
     });
 });
-
 
 //------------------------------------------------------------------------------
 

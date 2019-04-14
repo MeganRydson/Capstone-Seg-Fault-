@@ -9,9 +9,18 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
-//------------------------------------------------------------------------------
+//-------------------------------Middleware----------------------------------
 
-router.get("/locations", function(req, res){
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
+//------------------------------------------------------------------------------
+//isLoggedIn
+router.get("/locations",  isLoggedIn, function(req, res){
     con.query("SELECT * FROM Locations", function (err, result, fields) {
         if (err) throw err;
         res.render("locations", {locations: result});
