@@ -1,5 +1,6 @@
 var db      = require("mysql");
 var router  = require("express").Router();
+var mailer  = require("nodemailer");
 
 var con = db.createConnection({
     host     : 'db-segfault-cap.cae0l6rwojdw.us-east-1.rds.amazonaws.com',
@@ -69,6 +70,32 @@ router.post("/events", function(req, res){
     if (req.body.ev_EndDate > req.body.ev_StartDate){
         con.query(sql, [events], function(err, result){
             if(err) throw err;
+            else {
+                let data, trans;
+                trans = mailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: "segfaultcapstone@gmail.com",
+                        pass: "Segfault2019@!"
+                    }
+                });
+                data = {
+                    from: req.body.name + ' &lt;' + req.body.email + '&gt;',
+                    to: "brian@brians.pics",
+                    subject: 'New message from your app',
+                    text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
+                };
+                trans.sendMail(data, function(err, response){
+                    if(err){
+                        res.render("failure");
+                    }
+                    else{
+                        res.render("success");
+                    }
+                });
+            }
         });
         res.redirect("/events");
     }
@@ -90,6 +117,8 @@ router.get("/events/:id/edit", function(req, res){
     ];
     con.query(sql, [1, 2], function(err, result, fields){
         if (err) throw err;
+        console.log(result[0]);
+        
         res.render("events_edit", {event: result[0], orgs: result[1], status: status});
     });
 });
