@@ -38,15 +38,18 @@ router.post("/register", function(req, res){
 
 //Log In Routes
 router.get("/login", function(req, res){
-    res.render("login");
+    res.render("/");
 });
 
 //log in login
-router.post("/login", passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login"
-}) ,function(req, res){
-});
+// router.post("/login", passport.authenticate("local", {
+//     // successRedirect: "/",
+//     // failureRedirect: "/login"
+//     res.redirect("/");
+// }) ,function(req, res){
+// });
+
+
 
 
 //Sign Out Routes
