@@ -20,7 +20,7 @@ function isLoggedIn(req, res, next){
 
 //------------------------------------------------------------------------------
 //isLoggedIn
-router.get("/locations",  isLoggedIn, function(req, res){
+router.get("/locations",   function(req, res){
     con.query("SELECT * FROM Locations", function (err, result, fields) {
         if (err) throw err;
         res.render("locations", {locations: result});

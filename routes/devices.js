@@ -21,7 +21,7 @@ function isLoggedIn(req, res, next){
 
 //------------------------------------------------------------------------------
 //isLoggedIn 
-router.get("/devices", isLoggedIn, function(req, res){
+router.get("/devices", function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
         res.render("devices", {devices: result});
