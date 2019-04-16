@@ -5,7 +5,6 @@ $(document).ready(function() {
       .modal()
       .modal("show");
   });
-
   if (typeof events === "object") {
     $("#calendar").fullCalendar({
       defaultView: "month",
@@ -24,23 +23,3 @@ $(document).ready(function() {
     });
   }
  });
-
-   $("#calendar").fullCalendar({
-    defaultView: "month",
-  // });
-//var calendar = new Calendar(document.getElementById("calendar"), {
-  events: events.map(function (event) {
-    return {
-      title: event.ev_Name,
-      start: event.ev_StartDate,
-      end: event.ev_EndDate,
-      allDay : false
-    }
-  })
-});
-
-
-$('.modal-pop[data-modal]').click(function() {
-    $('.modal[data-modal=' + $(this).attr('data-modal') + ']').modal().modal('show');
-});
-

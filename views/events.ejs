@@ -75,7 +75,6 @@ function format1(d) {
                     <td><%= events[i].org_OrgName %></td>
                     <td><%= format1(events[i].ev_StartDate) %></td>
                     <td><%= format1(events[i].ev_EndDate) %></td>
-                    <td><%= status[events[i].ev_Status] %></td>
                     <td class="right aligned">
                         
                         <a class="ui secondary mini button edit-button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>

@@ -1,3 +1,4 @@
+
 var db      = require("mysql");
 var router  = require("express").Router();
 var User    = require("./models/user");
@@ -38,18 +39,15 @@ router.post("/register", function(req, res){
 
 //Log In Routes
 router.get("/login", function(req, res){
-    res.render("/");
+    res.render("login");
 });
 
 //log in login
-// router.post("/login", passport.authenticate("local", {
-//     // successRedirect: "/",
-//     // failureRedirect: "/login"
-//     res.redirect("/");
-// }) ,function(req, res){
-// });
-
-
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login"
+}) ,function(req, res){
+});
 
 
 //Sign Out Routes
@@ -68,8 +66,8 @@ function isLoggedIn(req, res, next){
     res.redirect("/login");
 }
 
-//isLoggedIn
-router.get("/",   function(req, res){
+
+router.get("/", function(req, res){
     
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +
