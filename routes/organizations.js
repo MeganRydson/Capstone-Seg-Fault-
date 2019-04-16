@@ -19,8 +19,8 @@ function isLoggedIn(req, res, next){
 }
 
 //------------------------------------------------------------------------------
-
-router.get("/organizations", isLoggedIn, function(req, res){
+//isLoggedIn
+router.get("/organizations",  function(req, res){
     con.query("SELECT * FROM Organizations", function (err, result, fields) {
         if (err) throw err;
         res.render("organizations", {organizations: result});
