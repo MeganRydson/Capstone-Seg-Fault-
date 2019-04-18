@@ -10,8 +10,6 @@ var indexRoutes         = require("./routes/index"),
     locationRoutes      = require("./routes/locations"),
     eventsRoutes        = require("./routes/events"),
     organizationRoutes  = require("./routes/organizations");
-    settlementsRoutes   = require("./routes/settlements");
-
 
 app.use(parse.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -40,7 +38,6 @@ app.use(deviceRoutes);
 app.use(locationRoutes);
 app.use(eventsRoutes);
 app.use(organizationRoutes);
-app.use(settlementsRoutes);
 
 
 //-------------------------------SERVER INIT------------------------------------
