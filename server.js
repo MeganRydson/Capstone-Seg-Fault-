@@ -14,7 +14,7 @@ var indexRoutes         = require("./routes/index"),
     userRoutes          = require("./routes/users"),
     eventRoutes         = require("./routes/events"),
     checkoutRoutes      = require("./routes/checkout"),
-    transactionsRoutes  = require("./routes/transactions"),
+    transactionRoutes  = require("./routes/transactions"),
     trans_uploadRoutes  = require("./routes/trans_upload");
 
 
@@ -32,8 +32,7 @@ var con = db.createConnection({
     port     : '3306',
     user     : 'Segfaultcapstone',
     password : 'S3gfault2019',
-    database : 'db-segfault-cap',
-    multipleStatements: true
+    database : 'db-segfault-cap'
 });
 
 con.connect(function(err) {
@@ -50,7 +49,7 @@ app.use(eventRoutes);
 app.use(organizationRoutes);
 app.use(userRoutes);
 app.use(checkoutRoutes);
-app.use(transactionsRoutes);
+app.use(transactionRoutes);
 app.use(trans_uploadRoutes);
 
 
