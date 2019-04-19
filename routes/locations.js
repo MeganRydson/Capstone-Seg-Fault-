@@ -9,18 +9,10 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
-//-------------------------------Middleware----------------------------------
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 //------------------------------------------------------------------------------
-//isLoggedIn
-router.get("/locations",  isLoggedIn, function(req, res){
+
+router.get("/locations", function(req, res){
     con.query("SELECT * FROM Locations", function (err, result, fields) {
         if (err) throw err;
         res.render("locations", {locations: result});
@@ -42,11 +34,20 @@ router.post("/locations", function(req, res){
 
 //------------------------------------------------------------------------------
 
-router.post("/locations_edit", function(req, res){
+router.get("/locations/:id/edit", function(req, res){
+    con.query("SELECT * FROM Locations WHERE loc_ID = " + req.params.id, function (err, result, fields) {
+        if (err) throw err;
+        res.render("locations_edit", {locations: result});
+    });
+});
+
+//------------------------------------------------------------------------------
+
+router.put("/locations/:id", function(req, res){
     var sql = "UPDATE Locations SET loc_Name = ? WHERE loc_ID = ?";
     var locations = [
-        req.body.e_loc_Name,
-        req.body.e_loc_ID
+        req.body.loc_Name,
+        req.body.loc_ID
     ];
     con.query(sql, locations, function (err, result) {
         if (err) throw err;

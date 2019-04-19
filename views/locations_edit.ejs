@@ -1,0 +1,33 @@
+<% include partials/header %>
+    
+        <title>SegFault | Locations</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Edit <%= locations[0].loc_Name %></h1>
+    
+    <div class="add-event-form">
+        <form action="/locations/<%= locations[0].loc_ID %>?_method=PUT" method="POST">
+            <input type="hidden" name ="loc_ID" value="<%= locations[0].loc_ID %>">
+            <div class="ui form">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="loc_Name" value="<%= locations[0].loc_Name %>">
+                </div>
+                <br>
+                <div class="two fields">
+                    <div class="field">
+                        <a class="ui button" href="/locations">Cancel</a>
+                    </div>
+                    <div class="field">
+                        <input class="ui positive button" type="submit" value="Save">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+<% include partials/footer %>

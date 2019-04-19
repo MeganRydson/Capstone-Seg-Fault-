@@ -10,18 +10,9 @@ var con = db.createConnection({
 });
 
 
-//-------------------------------Middleware----------------------------------
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
 //------------------------------------------------------------------------------
-//isLoggedIn 
-router.get("/devices", isLoggedIn, function(req, res){
+
+router.get("/devices", function(req, res){
     con.query("SELECT * FROM Devices", function (err, result, fields) {
         if (err) throw err;
         res.render("devices", {devices: result});
@@ -45,14 +36,23 @@ router.post("/devices", function(req, res){
 
 //------------------------------------------------------------------------------
 
-router.post("/devices_edit", function(req, res){
+router.get("/devices/:id/edit", function(req, res){
+    con.query("SELECT * FROM Devices WHERE dev_ID = " + req.params.id, function (err, result, fields) {
+        if (err) throw err;
+        res.render("devices_edit", {devices: result});
+    });
+});
+
+//------------------------------------------------------------------------------
+
+router.put("/devices/:id", function(req, res){
     var sql = "UPDATE Devices SET dev_Name = ?, dev_SN = ?, dev_Description = ?, dev_Active = ? WHERE dev_ID = ?";
     var devices = [
-        req.body.e_dev_Name,
-        req.body.e_dev_SN,
-        req.body.e_dev_Description,
-        req.body.e_dev_Active,
-        req.body.e_dev_ID
+        req.body.dev_Name,
+        req.body.dev_SN,
+        req.body.dev_Description,
+        req.body.dev_Active,
+        req.body.dev_ID
     ];
     con.query(sql, devices, function (err, result) {
         if (err) throw err;

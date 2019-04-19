@@ -3,37 +3,164 @@
 
         <title>SegFault | Transactions</title>
         
+<%
+function formatID(id, des_length) {
+    var f_ID = "";
+    for (var i = 1; i <= des_length - id.toString().length; i++){
+        f_ID += "0";
+    }
+    return f_ID + id;
+} 
+%>
+<%
+function formatMoney(amount, decimalCount, decimal, thousands) {
+    try {
+        decimalCount = Math.abs(decimalCount);
+        decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+    
+        const negativeSign = amount < 0 ? "-" : "";
+    
+        let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+        let j = (i.length > 3) ? i.length % 3 : 0;
+
+        return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+    } catch (e) {
+        console.log(e)
+    }
+};
+%>
+
+
+<%
+function countIDs() {
+    var id = transactions[0].tr_EvID;
+    var count = 1;
+    for (var i = 1; i < transactions.length; i++){
+        if (transactions[i].tr_EvID != id){
+              count++;
+        }
+    }
+    return count;
+} 
+%>
+        
     </head>
     <body>
         
 <% include partials/navbar %>
 
     <h1>Transactions</h1>
-   
+    <div class="add-form">
+        
+        <div class="ui form">
+            <form action="/transactions" method="POST">
+            <div class="fields">
+                <div class="field">
+                    <label>Event ID | Name | Date</label>
+                    <select class="ui search dropdown" name="tr_EventID">
+                            <% if(countIDs() > 1){ %>
+                                <option value="Empty"><%= "Select an Event"  %></option> 
+                            <%} %>
+                            <% var arrayID = [];                                 %>
+                            <% var totalAmt = 0;                                 %>
+                            <% for(var i = 0; i < transactions.length; i++) {    %>
+                                <%    totalAmt += transactions[i].tr_Amt;        %>
+                                <%    var item = transactions[i].tr_EvID;        %>
+                                <%    if(arrayID.indexOf(transactions[i].tr_EvID) == -1){  %>
+                                <%       arrayID.push(item);                      %>
+                                         <option value="<%= transactions[i].tr_EvID %>">
+                                             <%= transactions[i].ev_Name + " | Event ID: " + formatID(transactions[i].tr_EvID, 6) + " | Date: " + transactions[i].evDate  %>
+                                         </option>
+                                <%    }                                          %>
+                            <% } %>
+                    </select>
+                </div>
+                <div class="field">
+                        <label>Settlement</label>
+                        <input class="ui secondary button" type="submit" name="settlement" value="Add Settlement">
+                </div>
+            </div>
+            <div class="fields">
+                <input class="ui secondary button edit-button" type="submit" name="filter" value="Filter">
+                <input class="ui secondary button" type="submit" name="clear" value="Clear Filter">
+            </div>
+            </form>
+            <div class="fields">
+                <button id="batch-delete" class="ui secondary button remove-button">Delete</button>
+                            
+                <div class="ui mini modal">
+                    <div class="header">Delete batch?</div>
+                    <div class="actions">
+                        <div class="ui deny button">
+                            No
+                        </div>
+                        <input class="ui secondary button remove-button" type="submit" name="delete" value="Delete">
+                    </div>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="ui big label" id="total">
+                    Total Amount $ <%= formatMoney(totalAmt, 2, ".", ",") %>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
-    <table class="ui selectable inverted striped table">
+
+    <table class="ui selectable inverted striped small table">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Event ID</th>
+                <th>Transact ID</th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Device</th>
                 <th>Amount</th>
                 <th>Event</th>
                 <th>Import Date</th>
+                <th>Edit / Remove</th>
             </tr>
         </thead>
         <tbody>
             <% for(var i = 0; i < transactions.length; i++){ %>
             <tr>
-                <td><%= transactions[i].ID %></td>
+                <td><%= formatID(transactions[i].tr_EvID, 6) %></td>
+                <td><%= formatID(transactions[i].tr_ID, 6) %></td>
                 <td><%= transactions[i].TrDate %></td>
                 <td><%= transactions[i].tr_Description %></td>
                 <td><%= transactions[i].dev_Name %></td>
                 <td><%= transactions[i].Amount %></td>
                 <td><%= transactions[i].ev_Name %></td>
                 <td></button><%= transactions[i].ImpDate %></td>
-            </tr>
+                <td class="right aligned">
+                     <% if (transactions[i].tr_Status == 2){ %>
+                        <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= transactions[i].tr_ID %>">Edit</button>
+                        <div class="ui tiny modal"  data-modal="<%= transactions[i].tr_ID %>">
+                            <div class="header">Edit <%= transactions[i].tr_Description %></div>
+                            <div class="content">
+                                <form action="/transactions_edit" method="POST">
+                                    <input type="hidden" name ="e_tr_ID" value="<%= transactions[i].tr_ID %>">
+                                    <div class="ui form">
+                                        <div class="field">
+                                            <label>Amount</label>
+                                            <input type="number" step=0.01 name="e_tr_Amt">
+                                        </div>
+                                        <br>
+                                        <div class="ui buttons">
+                                            <input class="ui positive button" type="submit" value="Save">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <form action="/transactions_remove" method="POST">
+                            <input type='hidden' name='tr_ID' value="<%= transactions[i].tr_ID %>">
+                            <input class="ui secondary mini button remove-button" type="submit" value="Remove">
+                        </form>
+                     <% } %>   
+                </td>
+                </tr>
             <% } %>
         </tbody>
     </table>

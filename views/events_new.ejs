@@ -14,7 +14,7 @@
     <div class="add-event-form">
         <form action="/events" method="POST">
             <div class="ui form">
-                <div class="two fields">
+                <div class="three fields">
                     <div class="field">
                         <label>Event Name</label>
                         <input type="text" name="ev_Name" placeholder="Event Name">
@@ -22,6 +22,7 @@
                     <div class="field">
                         <label>Organization</label>
                         <select class="ui search dropdown" name="ev_OrgID">
+                            <option value="Empty"><%= "Select an Organization"  %></option>
                             <% for(var i = 0; i < orgs.length; i++) { %>
                                 <option value="<%= orgs[i].org_ID %>">
                                     <%= orgs[i].org_OrgName %>
@@ -29,8 +30,19 @@
                             <% } %>
                         </select>
                     </div>
+                    <div class="field">
+                            <label>User</label>
+                            <select class="ui search dropdown" name="ev_UserID">
+                                <option value="Empty"><%= "Select a User"  %></option>
+                                <% for(var i = 0; i < users.length; i++) { %>
+                                    <option value="<%= users[i].user_ID %>">
+                                        <%= users[i].user_Name %>
+                                    </option>
+                                <% } %>
+                            </select>
+                    </div>
                 </div>
-                <div class="two fields">
+                <div class="three fields">
                     <div class="field">
                         <label>Start Date</label>
                         <input type="datetime-local" name="ev_StartDate" placeholder="Start Date">
@@ -39,8 +51,19 @@
                         <label>End Date</label>
                         <input type="datetime-local" name="ev_EndDate" placeholder="End Date">
                     </div>
+                    <div class="field">
+                            <label>Locations</label>
+                            <select class="ui search dropdown" name="ev_LocID">
+                                <option value="Empty"><%= "Select a Location"  %></option>
+                                <% for(var i = 0; i < locs.length; i++) { %>
+                                    <option value="<%= locs[i].loc_ID %>">
+                                        <%= locs[i].loc_Name %>
+                                    </option>
+                                <% } %>
+                            </select>
+                    </div>
                 </div>
-                <div class="two fields">
+                <div class="three fields">
                     <div class="field">
                         <label>Number of iPads</label>
                         <select class="ui search dropdown" name="ev_QtyiPad">
@@ -56,6 +79,10 @@
                                 <option value="<%= i %>"><%= i %></option>
                             <% } %>
                         </select>
+                    </div>
+                    <div class="field">
+                            <label>EMS Event ID</label>
+                            <input type="text" name="ev_EmsID" placeholder="EMS Event ID">
                     </div>
                 </div>
                     <div class="field">

@@ -5,7 +5,7 @@
 
 body {
     position: relative;
-    background-color: rgb(150,150,170);
+    background-color: #4977A6;
 }
 
 form {
@@ -21,7 +21,7 @@ i {
 }
 
 table {
-    width: 1300px !important;
+    width: 1400px !important;
     margin: 20px auto !important;
 }
 
@@ -51,6 +51,42 @@ input {
 .remove-button {
     color: #FF7F7F !important;
 }
+
+#users-table {
+    width: 900px !important;
+}
+
+#devices-table {
+    width: 1050px !important;
+}
+
+#locations-table {
+    width: 500px !important;
+}
+
+#organizations-table {
+    width: 600px !important;
+}
+
+#uploads-table {
+    width: 1100px !important;
+}
+
+#checkout-tables {
+    width: 1300px !important;
+    margin: 20px auto !important;
+}
+
+#checkout-1 {
+    width: 600px !important;
+    float: left;
+}
+
+#checkout-2 {
+    width: 600px !important;
+    float: right;
+}
+
 
 #bottom {
     position: absolute;

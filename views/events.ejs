@@ -10,6 +10,17 @@ function format(date) {
 %>
 
 <%
+function formatID(id, des_length) {
+    var f_ID = "";
+    for (var i = 1; i <= des_length - id.toString().length; i++){
+        f_ID += "0";
+    }
+    return f_ID + id;
+} 
+%>
+
+
+<%
 function format1(d) {
     var year = d.getFullYear();
     var month = d.getMonth() + 1;
@@ -40,11 +51,42 @@ function format1(d) {
 <% include partials/navbar %>
 
     <h1>Events</h1>
-    
+    <br>
+
+    <form class="add-form" action="/events" method="POST">
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Start Date</label>
+                    <input type="date" name="filter_StartDate" placeholder="Start Date">
+                </div>
+                <div class="field">
+                    <label>End Date</label>
+                    <input type="date" name="filter_EndDate" placeholder="End Date">
+                </div>
+                <div class="field">
+                    <label>Status</label>
+                    <select class="ui search dropdown" name="filter_Status">
+                        <option value="-2"><%= "All" %></option>
+                        <% for(var i = 0; i < 6; i++) { %>
+                            <option value="<%= i %>"><%= status[i] %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Filter</label>
+                    <input class="ui secondary button" type="submit" name="filter" value="Filter">
+                    <input class="ui secondary button" type="submit" name="clear" value="Clear Filter">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br>       
     <br>
     
     <div class="add-form">
-        <a id="centered" href="/events/new" class="ui secondary button">Request an Event</a>
+        <a href="/events/new" class="ui secondary button">Request an Event</a>
     </div>
     
     <table class="ui selectable inverted striped small celled table">
@@ -52,6 +94,7 @@ function format1(d) {
         <thead>
             <tr>
                 <th>ID</th>
+                <th>EMS Event ID</th>
                 <th>Date Created</th>
                 <th>iPads / CCRs</th>
                 <th>Name</th>
@@ -67,7 +110,8 @@ function format1(d) {
         <tbody>
             <% for(var i = 0; i < events.length; i++){ %>
                 <tr>
-                    <td><%= events[i].ev_ID %></td>
+                    <td><%= formatID(events[i].ev_ID, 6) %></td>
+                    <td><%= formatID(events[i].ev_EmsID, 6) %></td>
                     <td><%= format(events[i].ev_DateCreated) %></td>
                     <td><%= events[i].ev_QtyiPad %> / <%= events[i].ev_QtyCCR %></td>
                     <td><%= events[i].ev_Name %></td>
@@ -77,14 +121,26 @@ function format1(d) {
                     <td><%= format1(events[i].ev_EndDate) %></td>
                     <td><%= status[events[i].ev_Status] %></td>
                     <td class="right aligned">
-                        
-                        <a class="ui secondary mini button edit-button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>
-                        
-                        <form action="/events_remove" method="POST">
-                            <input type='hidden' name='ev_ID' value="<%= events[i].ev_ID %>">
-                            <input class="ui mini secondary button remove-button" type="submit" value="Remove">
-                        </form>
-                        
+                        <% if(events[i].ev_Status < 4){ %>
+                            <a class="ui secondary mini button edit-button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>
+                            <button class="ui secondary mini button remove-button" data-modal="<%= events[i].ev_ID %>">Remove</button>
+                            
+                            <div class="ui mini modal" data-modal="<%= events[i].ev_ID %>">
+                                <div class="header">Delete <%= events[i].ev_Name %>?</div>
+                                <div class="actions">
+                                    <div class="ui deny button">
+                                        No
+                                    </div>
+                                    <form action="/events_remove" method="POST">
+                                        <input type='hidden' name='ev_ID' value="<%= events[i].ev_ID %>">
+                                        <input class="ui red button" type="submit" value="Delete">
+                                    </form>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <input class="ui mini secondary button edit-button" disabled=true type="submit" value="Edit">
+                            <input class="ui mini secondary button remove-button" disabled=true type="submit" value="Remove">
+                        <% } %>
                     </td>
                 </tr>
             <% } %>
@@ -92,3 +148,4 @@ function format1(d) {
         
     </table>
     
+<% include partials/footer %>

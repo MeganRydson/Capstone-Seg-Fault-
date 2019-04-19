@@ -1,0 +1,51 @@
+<% include partials/header %>
+    
+        <title>SegFault | Users</title>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Edit <%= users[0].user_Name %></h1>
+    
+    <div class="add-event-form">
+        <form action="/users/<%= users[0].user_ID %>?_method=PUT" method="POST">
+            <input type="hidden" name ="user_ID" value="<%= users[0].user_ID %>">
+            <div class="ui form">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Name</label>
+                        <input type="text" name ="user_Name" value="<%= users[0].user_Name %>">
+                    </div>
+                    <div class="field">
+                        <label>Type</label>
+                        <select class="ui search dropdown" name="user_Type">
+                            <option value="0">Client</option>
+                            <option value="1">Employee</option>
+                            <option value="2">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" name ="user_Email" value="<%= users[0].user_Email %>">
+                </div>
+                <div class="field">
+                    <label>Phone Number <i>(XXX-XXX-XXXX)</i></label>
+                    <input type="tel" name ="user_Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%= users[0].user_Phone %>">
+                </div>
+                <br>
+                <div class="two fields">
+                    <div class="field">
+                        <a class="ui button" href="/users">Cancel</a>
+                    </div>
+                    <div class="field">
+                        <input class="ui positive button" type="submit" value="Save">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+<% include partials/footer %>
