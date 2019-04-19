@@ -30,7 +30,7 @@
         </div>
     </form>
 
-    <table class="ui selectable inverted striped small table">
+    <table id="organizations-table" class="ui selectable inverted striped small table">
         
         <thead>
             <tr>
@@ -49,35 +49,22 @@
                 <td><%= organizations[i].org_BudgetCode %></td>
                 <td class="right aligned">
                     
-                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= organizations[i].org_ID %>">Edit</button>
+                    <a class="ui secondary mini button edit-button" href="/organizations/<%= organizations[i].org_ID %>/edit">Edit</a>
                     
-                    <div class="ui tiny modal"  data-modal="<%= organizations[i].org_ID %>">
-                        <div class="header">Edit <%= organizations[i].org_OrgName %></div>
-                        <div class="content">
-                            <form action="/organizations_edit" method="POST">
-                                <input type="hidden" name ="e_org_ID" value="<%= organizations[i].org_ID %>">
-                                <div class="ui form">
-                                    <div class="field">
-                                        <label>Name</label>
-                                        <input type="text" name ="e_org_OrgName" value="<%= organizations[i].org_OrgName %>">
-                                    </div>
-                                    <div class="field">
-                                        <label>Budget Code</label>
-                                        <input type="text" name ="e_org_BudgetCode" value="<%= organizations[i].org_BudgetCode %>">
-                                    </div>
-                                    <br>
-                                    <div class="ui buttons">
-                                        <input class="ui positive button" type="submit" value="Save">
-                                    </div>
-                                </div>
+                    <button class="ui secondary mini button remove-button" data-modal="<%= organizations[i].org_ID %>">Remove</button>
+                    
+                    <div class="ui mini modal" data-modal="<%= organizations[i].org_ID %>">
+                        <div class="header">Delete <%= organizations[i].org_OrgName %>?</div>
+                        <div class="actions">
+                            <div class="ui deny button">
+                                No
+                            </div>
+                            <form action="/organizations_remove" method="POST">
+                                <input type='hidden' name='org_ID' value="<%= organizations[i].org_ID %>">
+                                <input class="ui red button" type="submit" value="Delete">
                             </form>
                         </div>
                     </div>
-                    
-                    <form action="/organizations_remove" method="POST">
-                        <input type='hidden' name='org_ID' value="<%= organizations[i].org_ID %>">
-                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
-                    </form>
                     
                 </td>
             </tr>

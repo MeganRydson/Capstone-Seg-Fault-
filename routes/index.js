@@ -1,7 +1,5 @@
 var db      = require("mysql");
 var router  = require("express").Router();
-var User    = require("./models/user");
-var passport = require("passport");
 
 
 //------------------------------------------------------------------------------
@@ -14,70 +12,10 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 1007d2e3bb4eb10920d703beb44bc079c26e7748
-//-------------------------------Auth Routes----------------------------------
-//show sign up form
-router.get("/register", function(req, res){
-    res.render("register");
-});
+//------------------------------------------------------------------------------
 
-//handling user sign up
-router.post("/register", function(req, res){
-    req.body.username
-    req.body.password
-    User.register(new User({username: req.body.username}), req.body.password, function(err,user){
-       if(err){
-           console.log(err);
-           return res.render('register');
-       } 
-       passport.authenticate("local")(req, res, function(){
-          res.redirect("/");
-       });
-    });
-});
-
-
-//Log In Routes
-router.get("/login", function(req, res){
-    res.render("login");
-});
-
-//log in login
-router.post("/login", passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login"
-}) ,function(req, res){
-});
-
-
-//Sign Out Routes
-router.get("/signOut", function(req, res){
-    req.logout();
-    res.redirect("/login");
-});
-
-
-//-------------------------------Middleware----------------------------------
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-<<<<<<< HEAD
-
-router.get("/",  isLoggedIn, function(req, res){
-
-=======
-//isLoggedIn
-router.get("/", isLoggedIn,  function(req, res){
-    
->>>>>>> 1007d2e3bb4eb10920d703beb44bc079c26e7748
+router.get("/", function(req, res){
     con.query("SELECT *, org_OrgName, user_Name " +
               "FROM Events, Organizations, Users " +
               "WHERE Events.ev_OrgID = Organizations.org_ID and " +
@@ -86,9 +24,6 @@ router.get("/", isLoggedIn,  function(req, res){
         res.render("home", {events: result});
     });
 });
-
-//------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 

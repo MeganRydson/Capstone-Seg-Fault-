@@ -9,18 +9,9 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
-//-------------------------------Middleware----------------------------------
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
 //------------------------------------------------------------------------------
-//isLoggedIn
-router.get("/organizations", isLoggedIn, function(req, res){
+
+router.get("/organizations", function(req, res){
     con.query("SELECT * FROM Organizations", function (err, result, fields) {
         if (err) throw err;
         res.render("organizations", {organizations: result});
@@ -37,19 +28,27 @@ router.post("/organizations", function(req, res){
     ]];
     con.query(sql, [organizations], function(err, result){
         if(err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows);
     });
     res.redirect("/organizations");
 });
 
 //------------------------------------------------------------------------------
 
-router.post("/organizations_edit", function(req, res){
+router.get("/organizations/:id/edit", function(req, res){
+    con.query("SELECT * FROM Organizations WHERE org_ID = " + req.params.id, function (err, result, fields) {
+        if (err) throw err;
+        res.render("organizations_edit", {organizations: result});
+    });
+});
+
+//------------------------------------------------------------------------------
+
+router.put("/organizations/:id", function(req, res){
     var sql = "UPDATE Organizations SET org_OrgName = ?, org_BudgetCode = ? WHERE org_ID = ?";
     var organizations = [
-        req.body.e_org_OrgName,
-        req.body.e_org_BudgetCode,
-        req.body.e_org_ID
+        req.body.org_OrgName,
+        req.body.org_BudgetCode,
+        req.body.org_ID
     ];
     con.query(sql, organizations, function (err, result) {
         if (err) throw err;

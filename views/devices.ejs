@@ -36,7 +36,7 @@
     
     <br>
     
-    <table class="ui selectable inverted striped small table">
+    <table id="devices-table" class="ui selectable inverted striped small table">
         
         <thead>
             <tr>
@@ -65,51 +65,22 @@
                 </td>
                 <td class="right aligned">
                     
-                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= devices[i].dev_ID %>">Edit</button>
+                    <a class="ui secondary mini button edit-button" href="/devices/<%= devices[i].dev_ID %>/edit">Edit</a>
                     
-                    <div class="ui tiny modal" data-modal="<%= devices[i].dev_ID %>">
-                        <div class="header">Edit <%= devices[i].dev_Name %></div>
-                        <div class="content">
-                            <form action="/devices_edit" method="POST">
-                                <input type="hidden" name ="e_dev_ID" value="<%= devices[i].dev_ID %>">
-                                <div class="ui form">
-                                    <div class="field">
-                                        <label>Name</label>
-                                        <input type="text" name="e_dev_Name" value="<%= devices[i].dev_Name %>">
-                                    </div>
-                                    <div class="field">
-                                        <label>Serial Number</label>
-                                        <input type="text" name="e_dev_SN" value="<%= devices[i].dev_SN %>">
-                                    </div>
-                                    <div class="field">
-                                        <label>Description</label>
-                                        <input type="text" name="e_dev_Description" value="<%= devices[i].dev_Description %>">
-                                    </div>
-                                    <div class="field">
-                                        <label>Available?</label>
-                                        <select class="ui search dropdown" name="e_dev_Active">
-                                            <% if(devices[i].dev_Active === 0){ %>
-                                                <option value="0">Yes</option>
-                                                <option value="1">No</option>
-                                            <% } else { %>
-                                                <option value="1">No</option>
-                                                <option value="0">Yes</option>
-                                            <% } %>
-                                        </select>
-                                    </div>
-                                    <br>
-                                    <div class="ui buttons">
-                                        <input class="ui positive button" type="submit" value="Save">
-                                    </div>
-                                </div>
+                    <button class="ui secondary mini button remove-button" data-modal="<%= devices[i].dev_ID %>">Remove</button>
+                    
+                    <div class="ui mini modal" data-modal="<%= devices[i].dev_ID %>">
+                        <div class="header">Delete <%= devices[i].dev_Name %>?</div>
+                        <div class="actions">
+                            <div class="ui deny button">
+                                No
+                            </div>
+                            <form action="/devices_remove" method="POST">
+                                <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
+                                <input class="ui red button" type="submit" value="Delete">
                             </form>
                         </div>
                     </div>
-                    
-                    <form action="/devices_remove" method="POST">
-                        <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
-                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
-                    </form>
                     
                 </td>
             </tr>

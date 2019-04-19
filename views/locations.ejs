@@ -26,7 +26,7 @@
         </div>
     </form>
     
-    <table class="ui selectable inverted striped small table">
+    <table id="locations-table" class="ui selectable inverted striped small table">
         
         <thead>
             <tr>
@@ -43,31 +43,22 @@
                 <td><%= locations[i].loc_Name %></td>
                 <td class="right aligned">
                     
-                    <button class="ui secondary mini button edit-button modal-pop" data-modal="<%= locations[i].loc_ID %>">Edit</button>
+                    <a class="ui secondary mini button edit-button" href="/locations/<%= locations[i].loc_ID %>/edit">Edit</a>
                     
-                    <div class="ui tiny modal"  data-modal="<%= locations[i].loc_ID %>">
-                        <div class="header">Edit <%= locations[i].dev_Name %></div>
-                        <div class="content">
-                            <form action="/locations_edit" method="POST">
-                                <input type="hidden" name ="e_loc_ID" value="<%= locations[i].loc_ID %>">
-                                <div class="ui form">
-                                    <div class="field">
-                                        <label>Name</label>
-                                        <input type="text" name="e_loc_Name" value="<%= locations[i].loc_Name %>">
-                                    </div>
-                                    <br>
-                                    <div class="ui buttons">
-                                        <input class="ui positive button" type="submit" value="Save">
-                                    </div>
-                                </div>
+                    <button class="ui secondary mini button remove-button" data-modal="<%= locations[i].loc_ID %>">Remove</button>
+                    
+                    <div class="ui mini modal" data-modal="<%= locations[i].loc_ID %>">
+                        <div class="header">Delete <%= locations[i].loc_Name %>?</div>
+                        <div class="actions">
+                            <div class="ui deny button">
+                                No
+                            </div>
+                            <form action="/locations_remove" method="POST">
+                                <input type='hidden' name='loc_ID' value="<%= locations[i].loc_ID %>">
+                                <input class="ui red button" type="submit" value="Delete">
                             </form>
                         </div>
                     </div>
-                    
-                    <form action="/locations_remove" method="POST">
-                        <input type='hidden' name='loc_ID' value="<%= locations[i].loc_ID %>">
-                        <input class="ui secondary mini button remove-button" type="submit" value="Remove">
-                    </form>
                     
                 </td>
             </tr>

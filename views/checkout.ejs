@@ -1,0 +1,136 @@
+<% include partials/header %>
+
+
+        <title>SegFault | Checkout</title>
+        
+<%
+function formatID(id, des_length) {
+    var f_ID = "";
+    for (var i = 1; i <= des_length - id.toString().length; i++){
+        f_ID += "0";
+    }
+    return f_ID + id;
+} 
+%>
+<%
+function format1(d) {
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var date = d.getDate();
+    var day = d.getDay();
+    var hour = d.getHours();
+    var minute = d.getMinutes();
+    var ampm;
+    var weekday = ["Sun","Mon","Tue","Wed","Thurs","Fri","Sat"]
+    if(hour >= 13){
+        hour = hour - 12;
+    }
+    if(minute < 10){
+        minute = "0" + minute;
+    }
+    if(hour >= 12){
+        ampm = "PM";
+    } else {
+        ampm = "AM";
+    }
+    return weekday[day] + " " + month + "/" + date + "/" + year + " " + hour + ":" + minute + " " + ampm;
+} 
+%>
+        
+    </head>
+    <body>
+        
+<% include partials/navbar %>
+
+    <h1>Checkout Devices for Events</h1>
+    
+    <br>
+    
+    <form class="add-form" action="/transactions" method="POST">
+        
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Event ID | Name | Date</label>
+                    <select class="ui search dropdown" name="ev_ID">
+                        <option value="Empty">Select an Event</option> 
+                        <% for(var i = 0; i < events.length; i++) {    %>
+                            <option value="<%= events[i].ev_ID %>">
+                                <%= events[i].ev_Name + " | Event ID: " + formatID(events[i].ev_ID, 6) + " | Date: " + format1(events[i].ev_StartDate)  %>
+                            </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+    
+    <div id="checkout-tables">
+        
+        <table id="checkout-1" class="ui selectable inverted striped small table">
+        
+            <thead>
+                <tr>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+            
+        </table>
+        
+        <table id="checkout-2" class="ui selectable inverted striped small table">
+        
+            <thead>
+                <tr>
+                    <th>Assigned</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+            
+        </table>
+        
+    </div>
+    
+
+<% include partials/footer %>

@@ -9,18 +9,10 @@ var con = db.createConnection({
     database : 'db-segfault-cap'
 });
 
-//-------------------------------Middleware----------------------------------
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 //------------------------------------------------------------------------------
-//isLoggedIn,
-router.get("/users", isLoggedIn, function(req, res){
+
+router.get("/users", function(req, res){
     con.query("SELECT * FROM Users", function (err, result, fields) {
         if (err) throw err;
         res.render("users", {users: result});
@@ -45,14 +37,23 @@ router.post("/users", function(req, res){
 
 //------------------------------------------------------------------------------
 
-router.post("/users_edit", function(req, res){
+router.get("/users/:id/edit", function(req, res){
+    con.query("SELECT * FROM Users WHERE user_ID = " + req.params.id, function (err, result, fields) {
+        if (err) throw err;
+        res.render("users_edit", {users: result});
+    });
+});
+
+//------------------------------------------------------------------------------
+
+router.put("/users/:id", function(req, res){
     var sql = "UPDATE Users SET user_Name = ?, user_Email = ?, user_Phone = ?, user_Type = ? WHERE user_ID = ?";
     var users = [
-        req.body.e_user_Name,
-        req.body.e_user_Email,
-        req.body.e_user_Phone,
-        req.body.e_user_Type,
-        req.body.e_user_ID
+        req.body.user_Name,
+        req.body.user_Email,
+        req.body.user_Phone,
+        req.body.user_Type,
+        req.body.user_ID
     ];
     con.query(sql, users, function (err, result) {
         if (err) throw err;
