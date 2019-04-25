@@ -46,12 +46,11 @@ router.get("/devices/:id/edit", function(req, res){
 //------------------------------------------------------------------------------
 
 router.put("/devices/:id", function(req, res){
-    var sql = "UPDATE Devices SET dev_Name = ?, dev_SN = ?, dev_Description = ?, dev_Active = ? WHERE dev_ID = ?";
+    var sql = "UPDATE Devices SET dev_Name = ?, dev_SN = ?, dev_Description = ? WHERE dev_ID = ?";
     var devices = [
         req.body.dev_Name,
         req.body.dev_SN,
         req.body.dev_Description,
-        req.body.dev_Active,
         req.body.dev_ID
     ];
     con.query(sql, devices, function (err, result) {

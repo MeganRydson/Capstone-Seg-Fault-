@@ -110,7 +110,7 @@ function get_device_info (con, line_details, callback) {
                             if (err) throw err;
                             try {
                                 return_event_id = result2[0].ev_ID;
-                                var sqlEvent = "SELECT ev_ID FROM Events WHERE ev_ID = ? AND ev_Status = '3'";
+                                var sqlEvent = "SELECT ev_ID FROM Events WHERE ev_ID = ? AND ev_Status = '4'";
                                 con.query( sqlEvent, [return_event_id], function(err, result3, fields) {
                                     if (err) throw err;
                                     if (!err){

@@ -1,6 +1,6 @@
 <% include partials/header %>
     
-        <title>SegFault | Devices</title>
+        <title>RFP | Devices</title>
         
     </head>
     <body>
@@ -26,18 +26,6 @@
                 <div class="field">
                     <label>Description</label>
                     <input type="text" name="dev_Description" value="<%= devices[0].dev_Description %>">
-                </div>
-                <div class="field">
-                    <label>Available?</label>
-                    <select class="ui search dropdown" name="dev_Active">
-                        <% if(devices[0].dev_Active === 0){ %>
-                            <option value="0">Yes</option>
-                            <option value="1">No</option>
-                        <% } else { %>
-                            <option value="1">No</option>
-                            <option value="0">Yes</option>
-                        <% } %>
-                    </select>
                 </div>
                 <div class="two fields">
                     <div class="field">

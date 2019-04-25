@@ -1,92 +1,71 @@
 <% include partials/header %>
 
 
-        <title>SegFault | Settlements</title>
+        <title>RFP | Settlements</title>
         
     </head>
     <body>
+           
         
+    <%
+    function formatDate(d) {
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var date = d.getDate();
+        var hour = d.getHours();
+        var minute = d.getMinutes();
+        if(minute < 10){
+            minute = "0" + minute;
+        }
+        if (hour < 10){
+            hour = "0" + hour;
+        }
+        return year + "-" + month + "-" + date + " "+ hour + ":" + minute + ":" + "00";
+    } 
+    %>        
 <% include partials/navbar %>
 
     <h1>Settlements</h1>
     
     <br>
-    
-    <form class="add-form" action="/settlements" method="POST">
+        
+    <form class="add-form" action="/settlements_add" method="POST">
         <div class="ui form">
+            <div class="two fields">
+                <div class="two fields">
+                    <input type="hidden" name='tr_Date' value="<%= formatDate(ev_has_dev[0].ev_DtCheckOut) %>">
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="number" name="tr_Amt" placeholder="$ 99,999.99" step="0.01">
+                    </div>
+                    <div class="field">
+                            <label>Device</label>
+                            <select class="ui search dropdown" id="selectDevice" name="tr_DevID">
+                                    <% for(var i = 0; i < ev_has_dev.length; i++) {    %>
+                                        <% if (ev_has_dev[i].dev_Type == 2){ %>
+                                            <option value="<%= ev_has_dev[i].dev_ID %>">
+                                                <%= ev_has_dev[i].dev_Name  %>
+                                            </option>
+                                        <%} %>    
+                                    <% } %>
+                            </select>
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                    <div class="field">
+                            <label>Notes</label>
+                            <textarea rows="5" placeholder="Notes" name="tr_Notes" placeholder="Notes" maxlength="250" ></textarea>
+                    </div>
+            </div>
             <div class="fields">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="org_OrgName" placeholder="Name">
-                </div>
-                <div class="field">
-                    <label>Budget Code</label>
-                    <input type="text" name="org_BudgetCode" placeholder="Budget Code">
-                </div>
-                <div class="field">
-                        <input id="bottom" class="ui secondary button" type="submit" value="Add">
-                </div>
+                <a class="ui button" href="/transactions">Cancel</a>
+                <input class="ui secondary button" type="submit" value="Add">
             </div>
         </div>
     </form>
     
     <br>
-
-    <table class="ui selectable inverted striped table">
-        
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Budget Code</th>
-                <th class="right aligned">Edit / Remove</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            <% for(var i = 0; i < organizations.length; i++){ %>
-            <tr>
-                <td><%= settlements[i].org_ID %></td>
-                <td><%= settlements[i].org_OrgName %></td>
-                <td><%= settlements[i].org_BudgetCode %></td>
-                <td class="right aligned">
-                    
-                    <button class="ui secondary button modal-pop" data-modal="<%= settlements[i].org_ID %>">Edit</button>
-                    
-                    <div class="ui tiny modal"  data-modal="<%= settlements[i].org_ID %>">
-                        <div class="header">Edit <%= settlements[i].org_OrgName %></div>
-                        <div class="content">
-                            <form action="/settlements" method="POST">
-                                <input type="hidden" name ="e_org_ID" value="<%= settlements[i].org_ID %>">
-                                <div class="ui form">
-                                    <div class="field">
-                                        <label>Name</label>
-                                        <input type="text" name ="e_org_OrgName" value="<%= settlements[i].org_OrgName %>">
-                                    </div>
-                                    <div class="field">
-                                        <label>Budget Code</label>
-                                        <input type="text" name ="e_org_BudgetCode" value="<%= settlements[i].org_BudgetCode %>">
-                                    </div>
-                                    <br>
-                                    <div class="ui buttons">
-                                        <input class="ui positive button" type="submit" value="Save">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <form action="/settlements_remove" method="POST">
-                        <input type='hidden' name='org_ID' value="<%= settlements[i].org_ID %>">
-                        <input class="ui secondary button" type="submit" value="Remove">
-                    </form>
-                    
-                </td>
-            </tr>
-            <% } %>
-        </tbody>
-        
-    </table>
     
 
 <% include partials/footer %>

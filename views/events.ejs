@@ -1,7 +1,7 @@
 
 <% include partials/header %>
 
-        <title>SegFault | Events</title>
+        <title>RFP | Events</title>
         
 <%
 function format(date) {
@@ -89,7 +89,7 @@ function format1(d) {
         <a href="/events/new" class="ui secondary button">Request an Event</a>
     </div>
     
-    <table class="ui selectable inverted striped small celled table">
+    <table id="events-table" class="ui selectable inverted striped small celled table">
         
         <thead>
             <tr>

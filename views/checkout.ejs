@@ -1,7 +1,7 @@
 <% include partials/header %>
 
 
-        <title>SegFault | Checkout</title>
+        <title>RFP | Checkout</title>
         
 <%
 function formatID(id, des_length) {
@@ -36,6 +36,24 @@ function format1(d) {
     return weekday[day] + " " + month + "/" + date + "/" + year + " " + hour + ":" + minute + " " + ampm;
 } 
 %>
+
+<%
+function formatDate(d) {
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var date = d.getDate();
+    var hour = d.getHours();
+    var minute = d.getMinutes();
+    if(minute < 10){
+        minute = "0" + minute;
+    }
+    if (hour < 10){
+        hour = "0" + hour;
+    }
+    return year + "-" + month + "-" + date + " "+ hour + ":" + minute + ":" + "00";
+} 
+%>        
+
         
     </head>
     <body>
@@ -43,17 +61,22 @@ function format1(d) {
 <% include partials/navbar %>
 
     <h1>Checkout Devices for Events</h1>
-    
+
+   
     <br>
     
-    <form class="add-form" action="/transactions" method="POST">
+    <form class="add-form" action="/checkout" method="POST">
         
         <div class="ui form">
             <div class="fields">
                 <div class="field">
                     <label>Event ID | Name | Date</label>
-                    <select class="ui search dropdown" name="ev_ID">
-                        <option value="Empty">Select an Event</option> 
+                        <% if (events.length > 1){ %>
+                            <select class="ui search dropdown" name="ev_ID">
+                            <option value="Empty">Select an Event</option> 
+                        <% }else{ %>
+                            <select class="ui search dropdown" disabled=true name="ev_ID">
+                        <% } %>    
                         <% for(var i = 0; i < events.length; i++) {    %>
                             <option value="<%= events[i].ev_ID %>">
                                 <%= events[i].ev_Name + " | Event ID: " + formatID(events[i].ev_ID, 6) + " | Date: " + format1(events[i].ev_StartDate)  %>
@@ -62,75 +85,78 @@ function format1(d) {
                     </select>
                 </div>
             </div>
+
+            <div class="fields">
+                    <div class="field">
+                        <input class="ui secondary button fixed-size-button" type="submit" name="select" value="Select">
+                        <input class="ui secondary button fixed-size-button" type="submit" name="done" value="Done">
+                    </div>
+                </div>    
         </div>
-        
     </form>
-    
+
     <div id="checkout-tables">
         
         <table id="checkout-1" class="ui selectable inverted striped small table">
         
             <thead>
                 <tr>
-                    <th>Available</th>
-                </tr>
+                    <th>Devices Available</th>
+                    <th>Description</th>
+                    <th>Checkout</th>
+            </tr>
             </thead>
-            
             <tbody>
+                <% for(var i = 0; i < devices.length; i++){ %>
                 <tr>
-                    <td></td>
+                    <td><%= devices[i].dev_Name %></td>
+                    <td><%= devices[i].dev_Description %></td>
+                    <td class="right aligned">
+                            <form action="/checkout_add" method="POST">
+                                <input type='hidden' name='a_dev_ID' value="<%= devices[i].dev_ID %>">
+                                <input type='hidden' name='a_ev_StartDate' value="<%= formatDate(events[0].ev_StartDate) %>">
+                                <input type='hidden' name='a_ev_EndDate' value="<%= formatDate(events[0].ev_EndDate) %>">
+                                <input class="ui secondary mini button edit-button" type="submit" value="Add">
+                            </form>    
+                    </td>
                 </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
+                <%} %>
             </tbody>
             
         </table>
         
         <table id="checkout-2" class="ui selectable inverted striped small table">
-        
+
             <thead>
                 <tr>
-                    <th>Assigned</th>
+                    <th>Devices Loaned</th>
+                    <th>Description</th>
+                    <th>Return</th>
                 </tr>
             </thead>
             
             <tbody>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
+                <% if (events.length == 1){ %>
+                    <% for(var i = 0; i < ev_has_dev.length; i++){ %>
+                    <tr>
+                        <% if (ev_has_dev[i].ev_DtReturn == null){  %>
+                            <td><%= ev_has_dev[i].dev_Name %></td>
+                            <td><%= ev_has_dev[i].dev_Description %></td>
+                            <td class="right aligned">
+                                <form action="/checkout_return" method="POST">
+                                    <input type='hidden' name='r_evdev_ID' value="<%= ev_has_dev[i].evdev_ID %>">
+                                    <input type='hidden' name='r_dev_ID' value="<%= ev_has_dev[i].dev_ID %>">
+                                    <input class="ui secondary mini button edit-button" type="submit" value="Return">
+                                </form>
+                            </td>
+                        <% } %>    
+                    </tr>
+                    <%} %>
+                <% } %>    
             </tbody>
-            
+                
         </table>
-        
+
     </div>
-    
 
 <% include partials/footer %>

@@ -1,7 +1,7 @@
 <% include partials/header %>
 
 
-        <title>SegFault | Devices</title>
+        <title>RFP | Devices</title>
         
     </head>
     <body>
@@ -44,7 +44,6 @@
                 <th>Name</th>
                 <th>Serial #</th>
                 <th>Description</th>
-                <th>Available?</th>
                 <th class="right aligned">Edit / Remove</th>
             </tr>
         </thead>
@@ -56,13 +55,6 @@
                 <td><%= devices[i].dev_Name %></td>
                 <td><%= devices[i].dev_SN %></td>
                 <td></button><%= devices[i].dev_Description %></td>
-                <td>
-                    <% if(devices[i].dev_Active === 0){ %>
-                        Yes
-                    <% } else { %>
-                        No
-                    <% } %>
-                </td>
                 <td class="right aligned">
                     
                     <a class="ui secondary mini button edit-button" href="/devices/<%= devices[i].dev_ID %>/edit">Edit</a>
