@@ -7,36 +7,44 @@
         
 <% include partials/navbar %>
 
-    <h1>Edit <%= devices[0].dev_Name %></h1>
+    <div class="header-bar">
+        <h1>Edit <%= devices[0].dev_Name %></h1>
+    </div>
     
-    <div class="add-event-form">
-        <form action="/devices/<%= devices[0].dev_ID %>?_method=PUT" method="POST">
-            <input type="hidden" name ="dev_ID" value="<%= devices[0].dev_ID %>">
-            <div class="ui form">
-                <div class="two fields">
-                    <div class="field">
-                        <label>Name</label>
-                        <input type="text" name="dev_Name" value="<%= devices[0].dev_Name %>">
+    <div class="content">
+        
+        <div class="card">
+            <div class="add-form">
+                <form action="/devices/<%= devices[0].dev_ID %>?_method=PUT" method="POST">
+                    <input type="hidden" name ="dev_ID" value="<%= devices[0].dev_ID %>">
+                    <div class="ui form">
+                        <div class="two fields">
+                            <div class="field">
+                                <label>Name</label>
+                                <input type="text" name="dev_Name" value="<%= devices[0].dev_Name %>">
+                            </div>
+                            <div class="field">
+                                <label>Serial Number</label>
+                                <input type="text" name="dev_SN" value="<%= devices[0].dev_SN %>">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Description</label>
+                            <input type="text" name="dev_Description" value="<%= devices[0].dev_Description %>">
+                        </div>
+                        <div class="two fields">
+                            <div class="field">
+                                <a class="ui button" href="/devices">Cancel</a>
+                            </div>
+                            <div class="field">
+                                <input class="ui positive button" type="submit" value="Save">
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label>Serial Number</label>
-                        <input type="text" name="dev_SN" value="<%= devices[0].dev_SN %>">
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Description</label>
-                    <input type="text" name="dev_Description" value="<%= devices[0].dev_Description %>">
-                </div>
-                <div class="two fields">
-                    <div class="field">
-                        <a class="ui button" href="/devices">Cancel</a>
-                    </div>
-                    <div class="field">
-                        <input class="ui positive button" type="submit" value="Save">
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
+        
     </div>
     
 <% include partials/footer %>

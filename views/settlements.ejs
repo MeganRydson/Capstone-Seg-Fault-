@@ -25,47 +25,52 @@
     %>        
 <% include partials/navbar %>
 
-    <h1>Settlements</h1>
+    <div class="header-bar">
+        <h1>Settlements</h1>
+    </div>
     
     <br>
+    
+    <div class="content">
         
-    <form class="add-form" action="/settlements_add" method="POST">
-        <div class="ui form">
-            <div class="two fields">
-                <div class="two fields">
-                    <input type="hidden" name='tr_Date' value="<%= formatDate(ev_has_dev[0].ev_DtCheckOut) %>">
-                    <div class="field">
-                        <label>Amount</label>
-                        <input type="number" name="tr_Amt" placeholder="$ 99,999.99" step="0.01">
+        <div class="card">
+            <form class="add-form" action="/settlements_add" method="POST">
+                <div class="ui form">
+                    <div class="two fields">
+                        <div class="two fields">
+                            <input type="hidden" name='tr_Date' value="<%= formatDate(ev_has_dev[0].ev_DtCheckOut) %>">
+                            <div class="field">
+                                <label>Amount</label>
+                                <input type="number" name="tr_Amt" placeholder="$ 99,999.99" step="0.01">
+                            </div>
+                            <div class="field">
+                                    <label>Device</label>
+                                    <select class="ui search dropdown" id="selectDevice" name="tr_DevID">
+                                            <% for(var i = 0; i < ev_has_dev.length; i++) {    %>
+                                                <% if (ev_has_dev[i].dev_Type == 2){ %>
+                                                    <option value="<%= ev_has_dev[i].dev_ID %>">
+                                                        <%= ev_has_dev[i].dev_Name  %>
+                                                    </option>
+                                                <%} %>    
+                                            <% } %>
+                                    </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                            <label>Device</label>
-                            <select class="ui search dropdown" id="selectDevice" name="tr_DevID">
-                                    <% for(var i = 0; i < ev_has_dev.length; i++) {    %>
-                                        <% if (ev_has_dev[i].dev_Type == 2){ %>
-                                            <option value="<%= ev_has_dev[i].dev_ID %>">
-                                                <%= ev_has_dev[i].dev_Name  %>
-                                            </option>
-                                        <%} %>    
-                                    <% } %>
-                            </select>
+                    <div class="two fields">
+                            <div class="field">
+                                    <label>Notes</label>
+                                    <textarea rows="5" placeholder="Notes" name="tr_Notes" placeholder="Notes" maxlength="250" ></textarea>
+                            </div>
+                    </div>
+                    <div class="fields">
+                        <a class="ui button" href="/transactions">Cancel</a>
+                        <input class="ui secondary button" type="submit" value="Add">
                     </div>
                 </div>
-            </div>
-            <div class="two fields">
-                    <div class="field">
-                            <label>Notes</label>
-                            <textarea rows="5" placeholder="Notes" name="tr_Notes" placeholder="Notes" maxlength="250" ></textarea>
-                    </div>
-            </div>
-            <div class="fields">
-                <a class="ui button" href="/transactions">Cancel</a>
-                <input class="ui secondary button" type="submit" value="Add">
-            </div>
+            </form>
         </div>
-    </form>
-    
-    <br>
-    
+        
+    </div>
 
 <% include partials/footer %>

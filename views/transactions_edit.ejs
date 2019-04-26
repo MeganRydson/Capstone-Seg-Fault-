@@ -25,40 +25,48 @@
         
 <% include partials/navbar %>
 
-    <h1>Edit <%= transactions_edit[0].tr_Description %></h1>
+    <div class="header-bar">
+        <h1>Edit <%= transactions_edit[0].tr_Description %></h1>
+    </div>
+    
+    <br>
 
-
-    <form class="add-form" action="/transactions/<%= transactions_edit[0].tr_ID %>?_method=PUT" method="POST">
-        <div class="ui form">
-            <div class="two fields">
-                <input type="hidden" name ="tr_ID" value="<%= transactions_edit[0].tr_ID %>">
-                <div class="fields">
-                    <div class="field">
-                        <label>Amount</label>
-                        <input type="number" name="tr_Amt" step="0.01" value="<%= transactions_edit[0].tr_Amt %>">
-                    </div>
-                    <div class="field">
-                            <label>Device</label>
-                            <div class="ui big label" id="total">
-                                <%= transactions_edit[0].dev_Name %>
+    <div class="content">
+        
+        <div class="card">
+            <div class="add-form">
+                <form action="/transactions/<%= transactions_edit[0].tr_ID %>?_method=PUT" method="POST">
+                    <div class="ui form">
+                        <div class="two fields">
+                            <input type="hidden" name ="tr_ID" value="<%= transactions_edit[0].tr_ID %>">
+                            <div class="fields">
+                                <div class="field">
+                                    <label>Amount</label>
+                                    <input type="number" name="tr_Amt" step="0.01" value="<%= transactions_edit[0].tr_Amt %>">
+                                </div>
+                                <div class="field">
+                                        <label>Device</label>
+                                        <div class="ui big label" id="total">
+                                            <%= transactions_edit[0].dev_Name %>
+                                        </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="two fields">
+                                <div class="field">
+                                        <label>Notes</label>
+                                        <textarea rows="5" placeholder="Notes" name="tr_Notes" maxlength="250" ><%= transactions_edit[0].tr_Notes %></textarea>
+                                </div>
+                        </div>
+                        <div class="fields">
+                            <a class="ui button" href="/transactions">Cancel</a>
+                            <input class="ui secondary button" type="submit" value="Save">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="two fields">
-                    <div class="field">
-                            <label>Notes</label>
-                            <textarea rows="5" placeholder="Notes" name="tr_Notes" maxlength="250" ><%= transactions_edit[0].tr_Notes %></textarea>
-                    </div>
-            </div>
-            <div class="fields">
-                <a class="ui button" href="/transactions">Cancel</a>
-                <input class="ui secondary button" type="submit" value="Save">
+                </form>
             </div>
         </div>
-    </form>
-
-
-
+        
+    </div>
     
 <% include partials/footer %>

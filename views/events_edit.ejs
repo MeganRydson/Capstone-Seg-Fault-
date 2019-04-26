@@ -9,116 +9,124 @@
         
 <% include partials/navbar %>
 
-    <h1>Edit <%= event[0].ev_Name %></h1>
+    <div class="header-bar">
+        <h1>Edit <%= event[0].ev_Name %></h1>
+    </div>
     
-    <div class="add-event-form">
-        <form action="/events/<%= event[0].ev_ID %>?_method=PUT" method="POST">
-            <div class="ui form">
-                <div class="three fields">
-                    <div class="field">
-                        <label>Event Name</label>
-                        <input type="text" name="ev_Name" value="<%= event[0].ev_Name %>">
-                    </div>
-                    <div class="field">
-                        <label>Organization</label>
-                        <select class="ui search dropdown" name="ev_OrgID">
-                            <% for(var i = 0; i < orgs.length; i++) { %>
-                                <% if(orgs[i].org_ID == event[0].ev_OrgID) { %>
-                                    <option value="<%= orgs[i].org_ID %>" selected><%= orgs[i].org_OrgName %></option>
-                                <% } else { %>
-                                    <option value="<%= orgs[i].org_ID %>"><%= orgs[i].org_OrgName %></option>
-                                <% } %>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="field">
-                            <label>User</label>
-                            <select class="ui search dropdown" name="ev_UserID">
-                                <% for(var i = 0; i < users.length; i++) { %>
-                                    <% if(users[i].user_ID == event[0].ev_UserID){ %> 
-                                        <option value="<%= users[i].user_ID %>" selected><%= users[i].user_Name %></option>
-                                    <% } else { %>
-                                        <option value="<%= users[i].user_ID %>"><%= users[i].user_Name %></option>
+    <div class="content">
+        
+        <div class="card">
+            <div class="add-form">
+                <form action="/events/<%= event[0].ev_ID %>?_method=PUT" method="POST">
+                    <div class="ui form">
+                        <div class="three fields">
+                            <div class="field">
+                                <label>Event Name</label>
+                                <input type="text" name="ev_Name" value="<%= event[0].ev_Name %>">
+                            </div>
+                            <div class="field">
+                                <label>Organization</label>
+                                <select class="ui search dropdown" name="ev_OrgID">
+                                    <% for(var i = 0; i < orgs.length; i++) { %>
+                                        <% if(orgs[i].org_ID == event[0].ev_OrgID) { %>
+                                            <option value="<%= orgs[i].org_ID %>" selected><%= orgs[i].org_OrgName %></option>
+                                        <% } else { %>
+                                            <option value="<%= orgs[i].org_ID %>"><%= orgs[i].org_OrgName %></option>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
-                            </select>
-                    </div>
-                </div>
-                <div class="three fields">
-                    <div class="field">
-                        <label>Start Date</label>
-                        <input type="datetime-local" name="ev_StartDate" value="<%= event[0].DtStart %>">
-                    </div>
-                    <div class="field">
-                        <label>End Date</label>
-                        <input type="datetime-local" name="ev_EndDate" value="<%= event[0].DtEnd %>">
-                    </div>
-                    <div class="field">
-                            <label>Locations</label>
-                            <select class="ui search dropdown" name="ev_LocID">
-                                <% for(var i = 0; i < locs.length; i++) { %>
-                                    <% if(locs[i].loc_ID == event[0].ev_LocID){ %> 
-                                        <option value="<%= locs[i].loc_ID %>" selected><%= locs[i].loc_Name %></option>
-                                    <% } else { %>
-                                        <option value="<%= locs[i].loc_ID %>"><%= locs[i].loc_Name %></option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                    <label>User</label>
+                                    <select class="ui search dropdown" name="ev_UserID">
+                                        <% for(var i = 0; i < users.length; i++) { %>
+                                            <% if(users[i].user_ID == event[0].ev_UserID){ %> 
+                                                <option value="<%= users[i].user_ID %>" selected><%= users[i].user_Name %></option>
+                                            <% } else { %>
+                                                <option value="<%= users[i].user_ID %>"><%= users[i].user_Name %></option>
+                                            <% } %>
+                                        <% } %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="three fields">
+                            <div class="field">
+                                <label>Start Date</label>
+                                <input type="datetime-local" name="ev_StartDate" value="<%= event[0].DtStart %>">
+                            </div>
+                            <div class="field">
+                                <label>End Date</label>
+                                <input type="datetime-local" name="ev_EndDate" value="<%= event[0].DtEnd %>">
+                            </div>
+                            <div class="field">
+                                    <label>Locations</label>
+                                    <select class="ui search dropdown" name="ev_LocID">
+                                        <% for(var i = 0; i < locs.length; i++) { %>
+                                            <% if(locs[i].loc_ID == event[0].ev_LocID){ %> 
+                                                <option value="<%= locs[i].loc_ID %>" selected><%= locs[i].loc_Name %></option>
+                                            <% } else { %>
+                                                <option value="<%= locs[i].loc_ID %>"><%= locs[i].loc_Name %></option>
+                                            <% } %>
+                                        <% } %>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="three fields">
+                            <div class="field">
+                                <label>Number of iPads</label>
+                                <select class="ui search dropdown" name="ev_QtyiPad">
+                                    <% for(var i = 1; i <= 3; i++) { %>
+                                        <% if(i == event[0].ev_QtyiPad) { %>
+                                            <option value="<%= i %>" selected><%= i %></option>
+                                        <% } else { %>
+                                            <option value="<%= i %>"><%= i %></option>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
-                            </select>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Number of Credit Card Terminals</label>
+                                <select class="ui search dropdown" name="ev_QtyCCR">
+                                    <% for(var i = 1; i <= 3; i++) { %>
+                                        <% if(i == event[0].ev_QtyCCR) { %>
+                                            <option value="<%= i %>" selected><%= i %></option>
+                                        <% } else { %>
+                                            <option value="<%= i %>"><%= i %></option>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field">
+                                    <label>EMS Event ID</label>
+                                    <input type="text" name="ev_EmsID" value="<%= event[0].ev_EmsID %>">
+                            </div>
+                        </div>
+                            <div class="field">
+                                <label>Notes</label>
+                                <textarea rows="5" placeholder="Notes" name="ev_Notes" maxlength="250"><%= event[0].ev_Notes %></textarea>
+                            </div>
+                        <div class="two fields">
+                            <div class="field">
+                                <select class="ui search dropdown" name="ev_Status">
+                                    <% for(var i = 0; i < status.length; i++) { %>
+                                        <% if(event[0].ev_Status == i) { %>
+                                            <option value="<%= i %>" selected><%= status[i] %></option>
+                                        <% } else { %>
+                                            <option value="<%= i %>"><%= status[i] %></option>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <a class="ui button" href="/events">Cancel</a>
+                                <input class="ui positive button" type="submit" value="Save">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="three fields">
-                    <div class="field">
-                        <label>Number of iPads</label>
-                        <select class="ui search dropdown" name="ev_QtyiPad">
-                            <% for(var i = 1; i <= 3; i++) { %>
-                                <% if(i == event[0].ev_QtyiPad) { %>
-                                    <option value="<%= i %>" selected><%= i %></option>
-                                <% } else { %>
-                                    <option value="<%= i %>"><%= i %></option>
-                                <% } %>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Number of Credit Card Terminals</label>
-                        <select class="ui search dropdown" name="ev_QtyCCR">
-                            <% for(var i = 1; i <= 3; i++) { %>
-                                <% if(i == event[0].ev_QtyCCR) { %>
-                                    <option value="<%= i %>" selected><%= i %></option>
-                                <% } else { %>
-                                    <option value="<%= i %>"><%= i %></option>
-                                <% } %>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="field">
-                            <label>EMS Event ID</label>
-                            <input type="text" name="ev_EmsID" value="<%= event[0].ev_EmsID %>">
-                    </div>
-                </div>
-                    <div class="field">
-                        <label>Notes</label>
-                        <textarea rows="5" placeholder="Notes" name="ev_Notes" maxlength="250"><%= event[0].ev_Notes %></textarea>
-                    </div>
-                <div class="two fields">
-                    <div class="field">
-                        <select class="ui search dropdown" name="ev_Status">
-                            <% for(var i = 0; i < status.length; i++) { %>
-                                <% if(event[0].ev_Status == i) { %>
-                                    <option value="<%= i %>" selected><%= status[i] %></option>
-                                <% } else { %>
-                                    <option value="<%= i %>"><%= status[i] %></option>
-                                <% } %>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <a class="ui button" href="/events">Cancel</a>
-                        <input class="ui positive button" type="submit" value="Save">
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
+        
     </div>
     
 <% include partials/footer %>

@@ -7,31 +7,39 @@
         
 <% include partials/navbar %>
 
-    <h1>Edit <%= organizations[0].org_OrgName %></h1>
+    <div class="header-bar">
+        <h1>Edit <%= organizations[0].org_OrgName %></h1>
+    </div>
     
-    <div class="add-event-form">
-        <form action="/organizations/<%= organizations[0].org_ID %>?_method=PUT" method="POST">
-            <input type="hidden" name ="org_ID" value="<%= organizations[0].org_ID %>">
-            <div class="ui form">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name ="org_OrgName" value="<%= organizations[0].org_OrgName %>">
-                </div>
-                <div class="field">
-                    <label>Budget Code</label>
-                    <input type="text" name ="org_BudgetCode" value="<%= organizations[0].org_BudgetCode %>">
-                </div>
-                <br>
-                <div class="two fields">
-                    <div class="field">
-                        <a class="ui button" href="/organizations">Cancel</a>
+    <div class="content">
+        
+        <div class="card">
+            <div class="add-form">
+                <form action="/organizations/<%= organizations[0].org_ID %>?_method=PUT" method="POST">
+                    <input type="hidden" name ="org_ID" value="<%= organizations[0].org_ID %>">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" name ="org_OrgName" value="<%= organizations[0].org_OrgName %>">
+                        </div>
+                        <div class="field">
+                            <label>Budget Code</label>
+                            <input type="text" name ="org_BudgetCode" value="<%= organizations[0].org_BudgetCode %>">
+                        </div>
+                        <br>
+                        <div class="two fields">
+                            <div class="field">
+                                <a class="ui button" href="/organizations">Cancel</a>
+                            </div>
+                            <div class="field">
+                                <input class="ui positive button" type="submit" value="Save">
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                        <input class="ui positive button" type="submit" value="Save">
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
+        
     </div>
     
 <% include partials/footer %>

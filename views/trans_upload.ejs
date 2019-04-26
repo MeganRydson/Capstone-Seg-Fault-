@@ -8,41 +8,48 @@
         
 <% include partials/navbar %>
 
-    <h1>Upload BB Transact File</h1>
+    <div class="header-bar">
+        <h1>Upload BB Transact File</h1>
+    </div>
+    
     <br>
-        <form class="add-form" action="/trans_upload" method="POST">
-        <h3> Load Transactions...
-            <div class="ui secondary button">
-                <input type="file" id="fileUpload" name="tr_File" accept=".csv,.txt" nwdirectory>
-            </div>
-            <input id="top" class="ui secondary button" type="submit" value="Load File">
-        </h3> 
-        </form>
+    
+    <div class="content">
+        
+        <div class="card">
+            <form class="add-form" action="/trans_upload" method="POST">
+                <div class="ui secondary button">
+                    <input type="file" id="fileUpload" name="tr_File" accept=".csv,.txt" nwdirectory>
+                </div>
+                <input id="top" class="ui secondary button" type="submit" value="Load File">
+            </form>
+        </div>
 
-    <table id="uploads-table" class="ui selectable inverted striped small table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>LOADING ERROR</th>
-                <th>Trans Date</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Import Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for(var i = 0; i < transactions.length; i++){ %>
-            <tr>
-                <td><%= transactions[i].trerror_ID %></td>
-                <td><%= transactions[i].tre_ErrorDescr %></td>
-                <td><%= transactions[i].TransDt %></td>
-                <td><%= transactions[i].tre_DevDescr %></td>
-                <td><%= transactions[i].Amount %></td>
-                <td></button><%= transactions[i].ImpDt %></td>
-            </tr>
-            <% } %>
-        </tbody>
-    </table>
+        <table id="uploads-table" class="ui selectable inverted striped small table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>LOADING ERROR</th>
+                    <th>Trans Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Import Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < transactions.length; i++){ %>
+                <tr>
+                    <td><%= transactions[i].trerror_ID %></td>
+                    <td><%= transactions[i].tre_ErrorDescr %></td>
+                    <td><%= transactions[i].TransDt %></td>
+                    <td><%= transactions[i].tre_DevDescr %></td>
+                    <td><%= transactions[i].Amount %></td>
+                    <td></button><%= transactions[i].ImpDt %></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
 
 
 <% include partials/footer %>

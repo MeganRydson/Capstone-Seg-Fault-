@@ -8,78 +8,85 @@
         
 <% include partials/navbar %>
 
-    <h1>Devices</h1>
+    <div class="header-bar">
+        <h1>Devices</h1>
+    </div>
     
     <br>
     
-    <form class="add-form" action="/devices" method="POST">
-        <div class="ui form">
-            <div class="fields">
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="dev_Name" placeholder="Name">
-                </div>
-                <div class="field">
-                    <label>Serial #</label>
-                    <input type="text" name="dev_SN" placeholder="Serial Number">
-                </div>
-                <div class="field">
-                    <label>Description</label>
-                    <input type="text" name="dev_Description" placeholder="Descripition">
-                </div>
-                <div class="field">
-                    <input id="bottom" class="ui secondary button" type="submit" value="Add">
-                </div>
-            </div>
-        </div>
-    </form>
-    
-    <br>
-    
-    <table id="devices-table" class="ui selectable inverted striped small table">
+    <div class="content">
         
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Serial #</th>
-                <th>Description</th>
-                <th class="right aligned">Edit / Remove</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            <% for(var i = 0; i < devices.length; i++){ %>
-            <tr>
-                <td><%= devices[i].dev_ID %></td>
-                <td><%= devices[i].dev_Name %></td>
-                <td><%= devices[i].dev_SN %></td>
-                <td></button><%= devices[i].dev_Description %></td>
-                <td class="right aligned">
-                    
-                    <a class="ui secondary mini button edit-button" href="/devices/<%= devices[i].dev_ID %>/edit">Edit</a>
-                    
-                    <button class="ui secondary mini button remove-button" data-modal="<%= devices[i].dev_ID %>">Remove</button>
-                    
-                    <div class="ui mini modal" data-modal="<%= devices[i].dev_ID %>">
-                        <div class="header">Delete <%= devices[i].dev_Name %>?</div>
-                        <div class="actions">
-                            <div class="ui deny button">
-                                No
-                            </div>
-                            <form action="/devices_remove" method="POST">
-                                <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
-                                <input class="ui red button" type="submit" value="Delete">
-                            </form>
+        <div class="card">
+            <form class="add-form" action="/devices" method="POST">
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" name="dev_Name" placeholder="Name">
+                        </div>
+                        <div class="field">
+                            <label>Serial #</label>
+                            <input type="text" name="dev_SN" placeholder="Serial Number">
+                        </div>
+                        <div class="field">
+                            <label>Description</label>
+                            <input type="text" name="dev_Description" placeholder="Descripition">
+                        </div>
+                        <div class="field">
+                            <label><span id="blank">.</span></label>
+                            <input id="bottom" class="ui secondary button" type="submit" value="Add">
                         </div>
                     </div>
-                    
-                </td>
-            </tr>
-            <% } %>
-        </tbody>
+                </div>
+            </form>
+        </div>
         
-    </table>
-    
+        <br>
+        
+        <table id="devices-table" class="ui selectable inverted striped small table">
+            
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Serial #</th>
+                    <th>Description</th>
+                    <th class="right aligned">Edit / Remove</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <% for(var i = 0; i < devices.length; i++){ %>
+                <tr>
+                    <td><%= devices[i].dev_ID %></td>
+                    <td><%= devices[i].dev_Name %></td>
+                    <td><%= devices[i].dev_SN %></td>
+                    <td></button><%= devices[i].dev_Description %></td>
+                    <td class="right aligned">
+                        
+                        <a class="ui secondary mini button edit-button" href="/devices/<%= devices[i].dev_ID %>/edit">Edit</a>
+                        
+                        <button class="ui secondary mini button remove-button" data-modal="<%= devices[i].dev_ID %>">Remove</button>
+                        
+                        <div class="ui mini modal" data-modal="<%= devices[i].dev_ID %>">
+                            <div class="header">Delete <%= devices[i].dev_Name %>?</div>
+                            <div class="actions">
+                                <div class="ui deny button">
+                                    No
+                                </div>
+                                <form action="/devices_remove" method="POST">
+                                    <input type='hidden' name='dev_ID' value="<%= devices[i].dev_ID %>">
+                                    <input class="ui red button" type="submit" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+            
+        </table>
+    </div>
 
 <% include partials/footer %>
