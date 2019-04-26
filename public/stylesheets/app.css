@@ -41,10 +41,10 @@ body {
     text-align: right;
     vertical-align: middle;
     color: rgba(255,255,255,.7);
-    transition: 0.1s;
+    transition: 0.15s;
 }
 
-.spec-menu-item:hover {
+#spec-menu-item:hover {
     color: rgba(255,255,255,1);
 }
 
@@ -279,7 +279,7 @@ input {
 }
 
 #checkout-tables {
-    width: 1300px !important;
+    width: 1250px !important;
     margin: 20px auto !important;
     -webkit-box-shadow: 0 4px 8px 0px rgba(0,0,0,.4);
        -moz-box-shadow: 0 4px 8px 0px rgba(0,0,0,.4);
