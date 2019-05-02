@@ -18,18 +18,35 @@ var sql_std = "SELECT * FROM Events, Organizations, Users " +
                 "Events.ev_UserID = Users.user_ID";
 
 var sql_filterStatus = "SELECT * FROM Events, Organizations, Users " +
-                "WHERE Events.ev_OrgID = Organizations.org_ID and " +
-                "Events.ev_UserID = Users.user_ID and Events.ev_Status = ?";
+                        "WHERE Events.ev_OrgID = Organizations.org_ID and " +
+                        "Events.ev_UserID = Users.user_ID and Events.ev_Status = ?";
 
 var sql_filterDtRange_Status = "SELECT * FROM Events, Organizations, Users " +
-                "WHERE Events.ev_OrgID = Organizations.org_ID and " +
-                "Events.ev_UserID = Users.user_ID and Events.ev_Status = ? " +
-                "and ev_StartDate >= ? and ev_EndDate <= ?";
+                                "WHERE Events.ev_OrgID = Organizations.org_ID and " +
+                                "Events.ev_UserID = Users.user_ID and Events.ev_Status = ? " +
+                                "and ev_StartDate >= ? and ev_EndDate <= ?";
 
 var sql_filterDtRange = "SELECT * FROM Events, Organizations, Users " +
-                "WHERE Events.ev_OrgID = Organizations.org_ID and " +
-                "Events.ev_UserID = Users.user_ID " +
-                "and ev_StartDate >= ? and ev_EndDate <= ?";
+                        "WHERE Events.ev_OrgID = Organizations.org_ID and " +
+                        "Events.ev_UserID = Users.user_ID " +
+                        "and ev_StartDate >= ? and ev_EndDate <= ?";
+
+var sql_add_ret = "SELECT * FROM Events WHERE ev_ID = ?; " + 
+                    "SELECT * FROM Devices WHERE dev_Active = '1' and dev_Type < '3' and dev_Returned = '1'; " +
+                    "SELECT *, Devices.dev_Name, Devices.dev_Description FROM Events_Has_Devices, Devices " +
+                    "WHERE Events_Has_Devices.ev_ID = ? and Events_Has_Devices.dev_ID = Devices.dev_ID";
+
+
+var sql_add = "INSERT INTO Events_Has_Devices (dev_ID, ev_ID, ev_DtCheckOut, ev_DtBegin, ev_DtEnds) VALUES ?";
+
+var sql_dev_update = "UPDATE Devices SET dev_Returned = '0' WHERE dev_ID = ?";
+
+var sql_return = "UPDATE Events_Has_Devices SET ev_DtReturn = ? WHERE evdev_ID = ?";
+
+var sql_dev_return = "UPDATE Devices SET dev_Returned = '1' WHERE dev_ID = ?";
+
+var sql_events_update = "UPDATE Events SET ev_Status = '4' WHERE ev_ID = ?";
+      
 
 var startDate = "";
 var endDate = "";
@@ -190,7 +207,16 @@ router.put("/events/:id", function(req, res){
 });
 
 //------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
+router.get("/checkout/:id", function(req, res){
+    con.query(sql_add_ret,[req.params.id, req.params.id], function (err, result, fields) {
+        if (err) throw err;
+        res.render("checkout", {events: result[0], devices: result[1], ev_has_dev: result[2]});
+    });
+});
+
+//------------------------------------------------------------------------------
 router.post("/events_remove", function(req, res){
     var events = [[
         req.body.ev_ID
@@ -225,5 +251,82 @@ router.get("/event-:ev_ID", function(req, res){
 });
 
 //------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------
+
+router.post("/checkout_add", function(req, res){
+    var event_ID = req.body.a_ev_ID;
+    var today = new Date();
+    var checkout = [[
+        req.body.a_dev_ID,
+        event_ID,
+        today,
+        req.body.a_ev_StartDate,
+        req.body.a_ev_EndDate
+    ]];
+
+
+    con.query(sql_add, [checkout], function(err, result){
+            if(err) throw err;
+    });
+    var dev_ID = req.body.a_dev_ID;
+    con.query(sql_dev_update, [dev_ID], function(err, result){
+        if(err) throw err;
+    });
+
+    con.query(sql_events_update, [event_ID], function(err, result){
+        if(err) throw err;
+    });
+
+
+    res.redirect("/checkout/" + event_ID);
+
+});
+
+//------------------------------------------------------------------
+router.post("/checkout_return", function(req, res){
+    var event_ID = req.body.r_ev_ID;
+    var today = new Date();
+    var checkout = [
+        today,
+        req.body.r_evdev_ID
+    ];
+
+
+    con.query(sql_return, checkout, function(err, result){
+            if(err) throw err;
+    });
+    var dev_ID = req.body.r_dev_ID;
+    con.query(sql_dev_return, dev_ID, function(err, result){
+        if(err) throw err;
+    });
+
+    res.redirect("/checkout/" + event_ID);
+
+});
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+router.post("/checkout_remove", function(req, res){
+    con.query("DELETE FROM Events_Has_Devices WHERE evdev_ID = ?", req.body.d_evdev_ID, function(err, result){
+            if(err) throw err;
+    });
+    con.query(sql_dev_return, req.body.d_dev_ID, function(err, result){
+        if(err) throw err;
+    });
+
+    if (req.body.flag_Update == 1){
+        con.query("UPDATE Events SET ev_Status = '2' WHERE ev_ID = ?", req.body.d_ev_ID, function(err, result){
+            if(err) throw err;
+        });
+    }
+
+
+
+    res.redirect("/checkout/" + req.body.d_ev_ID);
+
+});
+
+//------------------------------------------------------------------
+
 
 module.exports = router;

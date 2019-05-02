@@ -13,8 +13,7 @@ var indexRoutes         = require("./routes/index"),
     organizationRoutes  = require("./routes/organizations"),
     userRoutes          = require("./routes/users"),
     eventRoutes         = require("./routes/events"),
-    checkoutRoutes      = require("./routes/checkout"),
-    transactionRoutes  = require("./routes/transactions"),
+    transactionRoutes   = require("./routes/transactions"),
     trans_uploadRoutes  = require("./routes/trans_upload");
 
 
@@ -48,7 +47,6 @@ app.use(locationRoutes);
 app.use(eventRoutes);
 app.use(organizationRoutes);
 app.use(userRoutes);
-app.use(checkoutRoutes);
 app.use(transactionRoutes);
 app.use(trans_uploadRoutes);
 

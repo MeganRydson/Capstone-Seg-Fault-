@@ -6,16 +6,20 @@ var con = db.createConnection({
     port     : '3306',
     user     : 'Segfaultcapstone',
     password : 'S3gfault2019',
-    database : 'db-segfault-cap'
+    database : 'db-segfault-cap',
+    multipleStatements: true
+
 });
 
 
 //------------------------------------------------------------------------------
 
 router.get("/devices", function(req, res){
-    con.query("SELECT * FROM Devices", function (err, result, fields) {
+    con.query("SELECT * FROM Devices;" + 
+              "SELECT * FROM Events_Has_Devices WHERE ev_DtReturn is null; " + 
+              "SELECT * FROM Events WHERE ev_Status = '4';", function (err, result, fields) {
         if (err) throw err;
-        res.render("devices", {devices: result});
+        res.render("devices", {devices: result[0], ev_has_dev: result[1], events: result[2]});
     });
 });
 
@@ -46,11 +50,12 @@ router.get("/devices/:id/edit", function(req, res){
 //------------------------------------------------------------------------------
 
 router.put("/devices/:id", function(req, res){
-    var sql = "UPDATE Devices SET dev_Name = ?, dev_SN = ?, dev_Description = ? WHERE dev_ID = ?";
+    var sql = "UPDATE Devices SET dev_Name = ?, dev_SN = ?, dev_Description = ?, dev_Active = ? WHERE dev_ID = ?";
     var devices = [
         req.body.dev_Name,
         req.body.dev_SN,
         req.body.dev_Description,
+        req.body.dev_Active,
         req.body.dev_ID
     ];
     con.query(sql, devices, function (err, result) {
@@ -67,7 +72,10 @@ router.post("/devices_remove", function(req, res){
     ]];
     var sql = "DELETE FROM Devices WHERE dev_ID = ?";
     con.query(sql, [devices], function (err, result) {
-        if (err) throw err;
+        if (err){
+            console.log("Cannot be deleted!!!");
+        }    
+    
     });
     res.redirect("/devices");
 });

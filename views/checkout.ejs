@@ -69,30 +69,20 @@ function formatDate(d) {
     <div class="content">
         
         <div class="card">
-            <form class="add-form" action="/checkout" method="POST">
+            <form class="add-form" action="/checkout/<%= events[0].ev_ID %>" method="POST">
                 <div class="ui form">
                     <div class="fields">
                         <div class="field">
-                            <label>Event ID | Name | Date</label>
-                                <% if (events.length > 1){ %>
-                                    <select class="ui search dropdown" name="ev_ID">
-                                    <option value="Empty">Select an Event</option> 
-                                <% }else{ %>
-                                    <select class="ui search dropdown" disabled=true name="ev_ID">
-                                <% } %>    
-                                <% for(var i = 0; i < events.length; i++) {    %>
-                                    <option value="<%= events[i].ev_ID %>">
-                                        <%= events[i].ev_Name + " | Event ID: " + formatID(events[i].ev_ID, 6) + " | Date: " + format1(events[i].ev_StartDate)  %>
-                                    </option>
-                                <% } %>
-                            </select>
+                            <label>Event Name | Date</label>
+                            <div class="ui big label label-total">
+                                    <%= events[0].ev_Name  + " | " + format1(events[0].ev_StartDate) %>
+                            </div>
                         </div>
                     </div>
         
                     <div class="fields">
                         <div class="field">
-                            <input class="ui secondary button fixed-size-button" type="submit" name="select" value="Select">
-                            <input class="ui secondary button fixed-size-button" type="submit" name="done" value="Done">
+                            <a class="ui secondary button fixed-size-button" href="/events">Done</a>
                         </div>
                     </div>    
                 </div>
@@ -120,6 +110,7 @@ function formatDate(d) {
                                     <input type='hidden' name='a_dev_ID' value="<%= devices[i].dev_ID %>">
                                     <input type='hidden' name='a_ev_StartDate' value="<%= formatDate(events[0].ev_StartDate) %>">
                                     <input type='hidden' name='a_ev_EndDate' value="<%= formatDate(events[0].ev_EndDate) %>">
+                                    <input type='hidden' name='a_ev_ID' value="<%= events[0].ev_ID %>">
                                     <input class="ui secondary mini button edit-button" type="submit" value="Add">
                                 </form>    
                         </td>
@@ -140,24 +131,36 @@ function formatDate(d) {
                 </thead>
                 
                 <tbody>
-                    <% if (events.length == 1){ %>
                         <% for(var i = 0; i < ev_has_dev.length; i++){ %>
-                        <tr>
-                            <% if (ev_has_dev[i].ev_DtReturn == null){  %>
-                                <td><%= ev_has_dev[i].dev_Name %></td>
-                                <td><%= ev_has_dev[i].dev_Description %></td>
-                                <td class="right aligned">
-                                    <form action="/checkout_return" method="POST">
-                                        <input type='hidden' name='r_evdev_ID' value="<%= ev_has_dev[i].evdev_ID %>">
-                                        <input type='hidden' name='r_dev_ID' value="<%= ev_has_dev[i].dev_ID %>">
-                                        <input class="ui secondary mini button edit-button" type="submit" value="Return">
-                                    </form>
-                                </td>
-                            <% } %>    
-                        </tr>
+                            <tr>
+                                    <td><%= ev_has_dev[i].dev_Name %></td>
+                                    <td><%= ev_has_dev[i].dev_Description %></td>
+                                    <td class="right aligned">
+                                        <form action="/checkout_return" method="POST">
+                                            <% if (ev_has_dev[i].ev_DtReturn == null){  %>
+                                                <input type='hidden' name='r_evdev_ID' value="<%= ev_has_dev[i].evdev_ID %>">
+                                                <input type='hidden' name='r_dev_ID' value="<%= ev_has_dev[i].dev_ID %>">
+                                                <input type='hidden' name='r_ev_ID' value="<%= events[0].ev_ID %>">
+                                                <input class="ui secondary mini button edit-button" type="submit" value="Return">
+                                            <%}else{ %>
+                                                <input class="ui secondary mini button edit-button" disabled=true type="submit" value="Return">
+                                            <%}%>    
+                                        </form>
+                                        <form action="/checkout_remove" method="POST">
+                                            <button class="ui secondary mini button remove-button" data-modal="<%= ev_has_dev[i].evdev_ID %>">Remove</button>
+                                            <input type='hidden' name='d_ev_ID' value="<%= events[0].ev_ID %>">
+                                            <input type='hidden' name='d_dev_ID' value="<%= ev_has_dev[i].dev_ID %>">
+                                            <input type='hidden' name='d_evdev_ID' value="<%= ev_has_dev[i].evdev_ID %>">
+                                            <% if(ev_has_dev.length == 1){ %>
+                                                <input type='hidden' name="flag_Update" value="1">
+                                            <%}else{%>
+                                                <input type='hidden' name="flag_Update" value="0">
+                                            <%}%>
+                                        </form>
+                                    </td>
+                            </tr>
                         <%} %>
-                    <% } %>    
-                </tbody>
+                    </tbody>
                     
             </table>
     

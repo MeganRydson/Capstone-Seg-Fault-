@@ -5,6 +5,35 @@
         
     </head>
     <body>
+    <%
+    function formatID(id, des_length) {
+        var f_ID = "";
+        for (var i = 1; i <= des_length - id.toString().length; i++){
+            f_ID += "0";
+        }
+        return f_ID + id;
+    } 
+    %>
+    <%
+    function findEventId(devID){
+        for ( var i = 0; i < ev_has_dev.length; i++){
+            if (devID == ev_has_dev[i].dev_ID){
+                return ev_has_dev[i].ev_ID;
+            }
+        }
+        return 0;
+    }
+    %>
+    <%
+    function findEventName(evID){
+        for ( var i = 0; i < events.length; i++){
+            if (evID == events[i].ev_ID){
+                return events[i].ev_Name;
+            }
+        }
+        return 0;
+    }
+    %>
         
 <% include partials/navbar %>
 
@@ -51,6 +80,7 @@
                     <th>Name</th>
                     <th>Serial #</th>
                     <th>Description</th>
+                    <th>Device Allocation</th>
                     <th class="right aligned">Edit / Remove</th>
                 </tr>
             </thead>
@@ -61,7 +91,15 @@
                     <td><%= devices[i].dev_ID %></td>
                     <td><%= devices[i].dev_Name %></td>
                     <td><%= devices[i].dev_SN %></td>
-                    <td></button><%= devices[i].dev_Description %></td>
+                    <td><%= devices[i].dev_SN %></td>
+                    <td></button>
+                        <% if (devices[i].dev_Returned == 0){ %>
+                            <%= ">>> " + formatID(findEventId(devices[i].dev_ID), 6) + "  |   " + findEventName(findEventId(devices[i].dev_ID))  %>
+                        <%}else{ %>
+                            Device Available
+                        <%}%>        
+                    </td>
+
                     <td class="right aligned">
                         
                         <a class="ui secondary mini button edit-button" href="/devices/<%= devices[i].dev_ID %>/edit">Edit</a>
@@ -88,5 +126,4 @@
             
         </table>
     </div>
-
 <% include partials/footer %>

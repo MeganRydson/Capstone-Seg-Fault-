@@ -2,6 +2,8 @@
 <% include partials/header %>
 
         <title>RFP | Events</title>
+
+
         
 <%
 function format(date) {
@@ -105,7 +107,6 @@ function format1(d) {
                 <tr>
                     <th>ID</th>
                     <th>EMS Event ID</th>
-                    <th>Date Created</th>
                     <th>iPads / CCRs</th>
                     <th>Name</th>
                     <th>User</th>
@@ -113,7 +114,7 @@ function format1(d) {
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    <th class="right aligned">Edit / Remove</th>
+                    <th class="center aligned">Actions</th>
                 </tr>
             </thead>
             
@@ -122,7 +123,6 @@ function format1(d) {
                     <tr>
                         <td><%= formatID(events[i].ev_ID, 6) %></td>
                         <td><%= formatID(events[i].ev_EmsID, 6) %></td>
-                        <td><%= format(events[i].ev_DateCreated) %></td>
                         <td><%= events[i].ev_QtyiPad %> / <%= events[i].ev_QtyCCR %></td>
                         <td><%= events[i].ev_Name %></td>
                         <td><%= events[i].user_Name %></td>
@@ -132,9 +132,9 @@ function format1(d) {
                         <td><%= status[events[i].ev_Status] %></td>
                         <td class="right aligned">
                             <% if(events[i].ev_Status < 4){ %>
-                                <a class="ui secondary mini button edit-button" href="/events/<%= events[i].ev_ID %>/edit">Edit</a>
-                                <button class="ui secondary mini button remove-button" data-modal="<%= events[i].ev_ID %>">Remove</button>
-                                
+                                <a class="ui secondary mini button" href="/checkout/<%= events[i].ev_ID %>"><i class="fa fa-book"></i></a>
+                                <a class="ui secondary mini button edit-button"  href="/events/<%= events[i].ev_ID %>/edit"><i class="fa fa-edit"></i></a>
+                                <button class="ui secondary mini button remove-button" data-modal="<%= events[i].ev_ID %>"><i class="fa fa-trash"></i></button>
                                 <div class="ui mini modal" data-modal="<%= events[i].ev_ID %>">
                                     <div class="header">Delete <%= events[i].ev_Name %>?</div>
                                     <div class="actions">
@@ -147,10 +147,15 @@ function format1(d) {
                                         </form>
                                     </div>
                                 </div>
-                            <% } else { %>
-                                <input class="ui mini secondary button edit-button" disabled=true type="submit" value="Edit">
-                                <input class="ui mini secondary button remove-button" disabled=true type="submit" value="Remove">
-                            <% } %>
+                                <% } else if(events[i].ev_Status == 4) { %>
+                                    <a class="ui secondary mini button" href="/checkout/<%= events[i].ev_ID %>"><i class="fa fa-book"></i></a>
+                                    <button class="ui secondary mini button edit-button"  disabled=true ><i class="fa fa-edit"></i></button>
+                                    <button class="ui secondary mini button remove-button" disabled=true data-modal="<%= events[i].ev_ID %>"><i class="fa fa-trash"></i></button>
+                                <% }else{ %>
+                                    <button class="ui secondary mini button" disabled=true><i class="fa fa-book"></i></a>
+                                    <button class="ui secondary mini button edit-button"  disabled=true ><i class="fa fa-edit"></i></button>
+                                    <button class="ui secondary mini button remove-button" disabled=true data-modal="<%= events[i].ev_ID %>"><i class="fa fa-trash"></i></button>
+                                <% }%>
                         </td>
                     </tr>
                 <% } %>
